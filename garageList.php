@@ -18,11 +18,14 @@ mysqli_close($conn);
 
 session_start();
 $startDate = $_SESSION['startDate'];
-$startTime = $_SESSION['startTime'];
+$startTimeString = $_SESSION['startTime'];
 $endDate = $_SESSION['endDate'];
 $endTime = $_SESSION['endTime'];
 
 
+
+echo $startTimeHour;
+echo gettype($startTimeHour);
 ?>
 <!DOCTYPE html>
 <html>
