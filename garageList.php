@@ -17,15 +17,21 @@ mysqli_free_result($result);
 mysqli_close($conn);
 
 session_start();
-$startDate = $_SESSION['startDate'];
+$startDateString = $_SESSION['startDate'];
 $startTimeString = $_SESSION['startTime'];
-$endDate = $_SESSION['endDate'];
-$endTime = $_SESSION['endTime'];
+$endDateString = $_SESSION['endDate'];
+$endTimeString = $_SESSION['endTime'];
 
+$date1 = explode('-', $startDateString);
+$date2 = explode('-', $endDateString);
+$time1 = explode(':', $startTimeString);
+$time2 = explode(':', $endTimeString);
 
+$startDate = (int)$date1[0] . $date1[1]. $date1[2];
+$endDate = (int)$date2[0] . $date2[1] . $date2[2];
+$startTimeHour = (int)$time1[0];
+$endTimeHour = (int)$time2[0];
 
-echo $startTimeHour;
-echo gettype($startTimeHour);
 ?>
 <!DOCTYPE html>
 <html>
