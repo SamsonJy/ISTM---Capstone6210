@@ -5,11 +5,6 @@ if(isset($_POST['search'])){
 	$_SESSION['startTime'] = $_POST['startTime'];
 	$_SESSION['endDate'] = $_POST['endDate'];
 	$_SESSION['endTime'] = $_POST['endTime'];
-	//test
-  echo $_SESSION['startDate'];
-	echo $_SESSION['startTime'];
-	echo $_SESSION['endDate'];
-	echo $_SESSION['endTime'];
 }
 ?>
 
@@ -85,7 +80,7 @@ if(isset($_POST['search'])){
 
 		<div class=" p-4 jumbotron jumbotron-fluid ">
 			<div class="container">
-				<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="homeForm" class="needs-validation" novalidate>
+				<form action="garageList.php" method="POST" id="homeForm" class="needs-validation" novalidate>
 
 					<div class="row">
 						<div class="form-group col">
