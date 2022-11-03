@@ -32,6 +32,17 @@ $endDate = (int)$date2[0] . $date2[1] . $date2[2];
 $startTimeHour = (int)$time1[0];
 $endTimeHour = (int)$time2[0];
 
+
+$pDate = $endDate - $startDate;
+if ($endTimeHour >= $startTimeHour) {
+	$pTime = $endTimeHour - $startTimeHour;
+	$totalTimeHour = $pDate * 24 + $pTime;
+}else {
+	$pTime = $startTimeHour - $endtimehours;
+	$totalTimeHour = $pDate * 24 - $pTime;
+}
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -96,7 +107,7 @@ $endTimeHour = (int)$time2[0];
 								<div class="post-container">
 									<div class="post-thumb"><?php echo '<img src="'.$garage['image_url'] . '" />'?></div>
 									<div class="post-content">
-										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $garage['hourly_price']?></span></h4>
+										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $garage['hourly_price'] * $totalTimeHour ?></span></h4>
 										<p><?php echo $garage['garage_location']?></p>
 									  </br>
 										<a id="fButton" onclick=" OpenModel();" class="btn btn-primary myBtn">Select</a>
@@ -107,7 +118,8 @@ $endTimeHour = (int)$time2[0];
 					</br>
 				<?php }?>
 
-		<!-- Modal -->
+<!--
+
 		<div id="myModal" class="modal">
 
 			<div class="modal-content">
@@ -263,7 +275,7 @@ $endTimeHour = (int)$time2[0];
 
 
 		</script>
-
+-->
 		<div class="footer">
 			<p>6210 Group A</p>
 		</div>
