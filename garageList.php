@@ -17,10 +17,30 @@ mysqli_free_result($result);
 mysqli_close($conn);
 
 session_start();
-$startDate = $_SESSION['startDate'];
-$startTime = $_SESSION['startTime'];
-$endDate = $_SESSION['endDate'];
-$endTime = $_SESSION['endTime'];
+$startDateString = $_SESSION['startDate'];
+$startTimeString = $_SESSION['startTime'];
+$endDateString = $_SESSION['endDate'];
+$endTimeString = $_SESSION['endTime'];
+
+$date1 = explode('-', $startDateString);
+$date2 = explode('-', $endDateString);
+$time1 = explode(':', $startTimeString);
+$time2 = explode(':', $endTimeString);
+
+$startDate = (int)$date1[0] . $date1[1]. $date1[2];
+$endDate = (int)$date2[0] . $date2[1] . $date2[2];
+$startTimeHour = (int)$time1[0];
+$endTimeHour = (int)$time2[0];
+
+
+$pDate = $endDate - $startDate;
+if ($endTimeHour >= $startTimeHour) {
+	$pTime = $endTimeHour - $startTimeHour;
+	$totalTimeHour = $pDate * 24 + $pTime;
+}else {
+	$pTime = $startTimeHour - $endtimehours;
+	$totalTimeHour = $pDate * 24 - $pTime;
+}
 
 
 ?>
@@ -87,7 +107,7 @@ $endTime = $_SESSION['endTime'];
 								<div class="post-container">
 									<div class="post-thumb"><?php echo '<img src="'.$garage['image_url'] . '" />'?></div>
 									<div class="post-content">
-										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $garage['hourly_price']?></span></h4>
+										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $garage['hourly_price'] * $totalTimeHour ?></span></h4>
 										<p><?php echo $garage['garage_location']?></p>
 									  </br>
 										<a id="fButton" onclick=" OpenModel();" class="btn btn-primary myBtn">Select</a>
@@ -98,7 +118,8 @@ $endTime = $_SESSION['endTime'];
 					</br>
 				<?php }?>
 
-		<!-- Modal -->
+<!--
+
 		<div id="myModal" class="modal">
 
 			<div class="modal-content">
@@ -254,7 +275,7 @@ $endTime = $_SESSION['endTime'];
 
 
 		</script>
-
+-->
 		<div class="footer">
 			<p>6210 Group A</p>
 		</div>

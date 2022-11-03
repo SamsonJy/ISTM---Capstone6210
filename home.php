@@ -5,7 +5,10 @@ if(isset($_POST['search'])){
 	$_SESSION['startTime'] = $_POST['startTime'];
 	$_SESSION['endDate'] = $_POST['endDate'];
 	$_SESSION['endTime'] = $_POST['endTime'];
+
+	header('Location: garageList.php');
 }
+
 ?>
 
 
@@ -80,7 +83,8 @@ if(isset($_POST['search'])){
 
 		<div class=" p-4 jumbotron jumbotron-fluid ">
 			<div class="container">
-				<form action="garageList.php" method="POST" id="homeForm" class="needs-validation" novalidate>
+
+				<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" id="homeForm" class="needs-validation" novalidate>
 
 					<div class="row">
 						<div class="form-group col">
@@ -161,20 +165,25 @@ if(isset($_POST['search'])){
 		</script>
 
 		<script>
-			//form validation
-            $("#searchButton").click(function () {
+		(function () {
+		  'use strict'
 
-                var form = $("#homeForm")
+		  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+		  var forms = document.querySelectorAll('.needs-validation')
 
-                if (form[0].checkValidity() === false) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-				form.addClass('was-validated');
-                if (form[0].checkValidity() === true) {
-					location.href = 'parkingDetails.html'
-				}
-            });
+		  // Loop over them and prevent submission
+		  Array.prototype.slice.call(forms)
+		    .forEach(function (form) {
+		      form.addEventListener('submit', function (event) {
+		        if (!form.checkValidity()) {
+		          event.preventDefault()
+		          event.stopPropagation()
+		        }
+
+		        form.classList.add('was-validated')
+		      }, false)
+		    })
+		})()
 
 	</script>
 
