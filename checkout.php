@@ -7,10 +7,15 @@ if(isset($_GET['id'])){
   $garage = mysqli_fetch_assoc($result);
   mysqli_free_result($result);
   mysqli_close($conn);
-  print_r($garage);
+
+
+  //print_r($garage);
 
   session_start();
-  echo $_SESSION['price'];
+  $totalTimeHour = $_SESSION['totalTimeHour'];
+  $price = $garage['hourly_price'] * $totalTimeHour;
+  //echo $price;
+
 }
 ?>
 
