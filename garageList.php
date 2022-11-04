@@ -1,6 +1,5 @@
 <?php
-//connect to local db
-$conn = mysqli_connect('localhost', 'ethan', '123456', 'gwvp');
+include('db_connect.php' );
 
 //check connection
 /*if(!$conn){
@@ -38,9 +37,12 @@ if ($endTimeHour >= $startTimeHour) {
 	$pTime = $endTimeHour - $startTimeHour;
 	$totalTimeHour = $pDate * 24 + $pTime;
 }else {
-	$pTime = $startTimeHour - $endtimehours;
+	$pTime = $startTimeHour - $endTimeHour;
 	$totalTimeHour = $pDate * 24 - $pTime;
 }
+
+$_SESSION['totalTimeHour'] = 	$totalTimeHour;
+
 
 
 ?>
@@ -101,16 +103,19 @@ if ($endTimeHour >= $startTimeHour) {
 				<hr />
 				<a href="home.php">← Back to the Previous Page</a>
 
-				<?php foreach($garages as $garage){ ?>
+				<?php foreach($garages as $garage){
+					$price = $garage['hourly_price'] * $totalTimeHour;?>
 					<div class="row">
 							<div class="col">
 								<div class="post-container">
-									<div class="post-thumb"><?php echo '<img src="'.$garage['image_url'] . '" />'?></div>
+									<div class="post-thumb"><?php echo '<img src="'.$garage['image_url'] . '"/>'?></div>
 									<div class="post-content">
-										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $garage['hourly_price'] * $totalTimeHour ?></span></h4>
+										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $price  ?></span></h4>
 										<p><?php echo $garage['garage_location']?></p>
 									  </br>
-										<a id="fButton" onclick=" OpenModel();" class="btn btn-primary myBtn">Select</a>
+										<input type="submit" name="search" value="Search" class="btn btn-primary" onClick="location.href='checkout.php?id=<?php echo $garage['garage_id'] ?>'">
+
+
 									</div>
 								</div>
 							</div>
