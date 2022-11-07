@@ -1,6 +1,4 @@
-<?php
-echo "testing";
-?>
+<?php session_start();?>
 <!doctype html>
 <html>
 <head>
@@ -19,9 +17,9 @@ echo "testing";
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
 <title>Georga Washington Visitor Parking Reservation System</title>
-<link href="css/multiColumnTemplate.css" rel="stylesheet" type="text/css">
-<link href="~/css/style.css" rel="stylesheet" type="text/css">
-<link href="~/js/javaScript.js" >
+<link href="../css/multiColumnTemplate.css" rel="stylesheet" type="text/css">
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<link href="../js/javaScript.js" >
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --> 
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// --> 
 <!--[if lt IE 9]>
@@ -32,7 +30,7 @@ echo "testing";
 <body>
 <div class="container">
   <header>
-    <div class="primary_header"> <img src="images/gw_monogram_2c.png" id="logo" alt="GWU Logo" >
+    <div class="primary_header"> <img src="..\images/gw_monogram_2c.png" id="logo" alt="GWU Logo" >
       <h1 class="title">Visitor Parking Reservation System</h1>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,7 +39,7 @@ echo "testing";
         <div class="navbar-nav"> <a class="nav-link active" href="home.html">Make Reservation <span class="sr-only">(current)</span></a> <a class="nav-link" href="contact.html">Reservation History</a> <a class="nav-link" href="contact.html">Account Setting</a> <a class="nav-link" href="contact.html">Cancel Reservation</a> <a class="nav-link" href="contact.html">Contact Us</a> </div>
       </div>
     </nav>
-    <img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" style="padding-right:70px; height:auto; max-width:1210px;margin:auto;"/> </header>
+    <img src="..\images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" style="padding-right:70px; height:auto; max-width:1210px;margin:auto;"/> </header>
     <section class="buttoms">
         <div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" class="btn btn-secondary" id="upcomingR">Upcoming Reservations</button>
@@ -49,59 +47,37 @@ echo "testing";
       <button type="button" class="btn btn-secondary" id="passedR">Passed Reservations</button>
     </div>
     <script>
-document.getElementById("upcomingR").addEventListener("click", myFunction(this));
-document.getElementById("inprocessR").addEventListener("click", myFunction(this));
-document.getElementById("passedR").addEventListener("click", myFunction(this));
-function myFunction(element) {
-  if(element.id=="upcomingR")
-  {
-    document.getElementById("inprocessR").style.display="none";
-    document.getElementById("passedR").style.display="none";
-    document.getElementById("upcomingR").style.display="inline";
-  } else if (element.id=="inprocessR")
-  {
-    document.getElementById("inprocessR").style.display="inline";
-    document.getElementById("passedR").style.display="none";
-    document.getElementById("upcomingR").style.display="none";
-  } else 
-  {
-    document.getElementById("inprocessR").style.display="none";
-    document.getElementById("passedR").style.display="inline";
-    document.getElementById("upcomingR").style.display="none";
-  }
-}
-    </section>
-	<!--reservation records-->
+      document.getElementById("upcomingR").addEventListener("click", myFunction(this));
+      document.getElementById("inprocessR").addEventListener("click", myFunction(this));
+      document.getElementById("passedR").addEventListener("click", myFunction(this));
+      
+      function myFunction(element) {
+        if($(element).id=="upcomingR")
+        {
+          document.getElementById("inprocess").style.display="none";
+          document.getElementById("passed").style.display="none";
+          document.getElementById("upcoming").style.display="inline";
+        } else if ($(element).id=="inprocess")
+        {
+          document.getElementById("inprocess").style.display="inline";
+          document.getElementById("passed").style.display="none";
+          document.getElementById("upcoming").style.display="none";
+        } else 
+        {
+          document.getElementById("inprocess").style.display="none";
+          document.getElementById("passed").style.display="inline";
+          document.getElementById("upcoming").style.display="none";
+        }
+      }
+    </script>
+	<!-- /--reservation records--/ -->
   <section class="reservation_record">
     <div class="upcoming-reservation">
       <div class="reservation_details col-xl-10">
       <div class="upcoming">
-        <?php
-          echo "<table style='border:solid 1px black;'>";
-          echo "<tr><th>Reservation ID</th><th>Garage name</th><th>Garage Location</th><th>arrival date</th><th>arrival time</th><th>total_charge</th>"
-          $checker = "localhost";
-          $username="ISTM6210";
-          $password= "Istm6210Test"
-          try{
-            $conn = new PDO("mysql:host=$servername;dbname=GWVP",$username,$password);
-
-            $conn -> setAttribute(PDO::ATTR_ERRMODE,PDD::ERRMODE_EXCEPTION);
-            echo "Connected successfully";
-            $stmt= $conn ->prepare("SELECT rd.reservation_id,g.garage_name,g.garagae_location,
-            rd.arrival_date,rd.arrival_time,rd.total_charge From reservations rd inner join garage g On rd.garage_id = g.garage_id where reservation_status='upcoming' ")
-            $stmt ->execute();
-
-            $result = $stmt ->setFetchMode(PDO::FETCH_ASSOC);
-            foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
-              echo $v;
-            }
-            echo "Connected successfully";
-          } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
-          }
-          $conn=null;
-          echo "</table>";
-        ?>
+        <?php 
+        $
+        include TPL_DIR."reservationCall.php";?>
 		   <div class="row justify-content-center">
       <div class="col-8 text center col-xl-12">
         <p class="text muted my-4"> Nothing for now </p>
@@ -116,7 +92,7 @@ function myFunction(element) {
    
 	  <div class="in-process-reservation col-xl-10">
 	  	<div class="reservation_details col-xl-5">
-          <div class="inprocess" style="display:none;">
+          <div id="inprocess" style="display:none;">
           <table style='border:solid 1px black;'>
           <tr>
             <th>Reservation ID</th>
@@ -129,9 +105,9 @@ function myFunction(element) {
         <?php
           echo "<table style='border:solid 1px black;'>";
           echo "<tr><th>Reservation ID</th><th>Garage name</th><th>Garage Location</th><th>arrival date</th><th>arrival time</th><th>total_charge</th>"
-          $checker = "localhost";
-          $username="ISTM6210";
-          $password= "Istm6210Test"
+          $servername = "localhost";
+          $username="cxlgo";
+          $password= "zero5397"
           try{
             $conn = new PDO("mysql:host=$servername;dbname=GWVP",$username,$password);
 
@@ -159,7 +135,7 @@ function myFunction(element) {
 	  
 	  <div class="finished-Reservation">
 	  	<div class="reservation_details col-xl-10">
-        <div class="passed" style="display:none;">
+        <div id="passed" style="display:none;">
           <table style='border:solid 1px black;'>
             <tr>
               <th>Reservation ID</th>

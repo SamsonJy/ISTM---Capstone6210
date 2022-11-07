@@ -13,7 +13,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
-
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 
@@ -70,6 +70,22 @@
                         <div id="spaceType" class="py-1"> <span class="d-block text-muted">Space Type</span> <span></span> </div>
                     </div>
                     <hr />
+                    <div class="col">
+                    </div>
+                    <br />  
+                    <div id="qrcode"></div>
+                    <script type="text/javascript">
+                    var qrcode = new QRCode(document.getElementById("qrcode"), {
+                        text: "GWVPtest",
+                        width: 128,
+                        height: 128,
+                        colorDark : "#5868bf",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.H
+                    });
+                    </script>
+                    </div>
+                    <hr />
                 </div>
             </div>
             <hr />
@@ -85,9 +101,7 @@
 
         </div>
 
-    </div>
-    <br />
-
+    
 
     <script>
         document.getElementById("confirmNum").innerHTML = "<span>" + "Confirmation # " + "</span>" + Math.floor(Math.random() * 999999999);
