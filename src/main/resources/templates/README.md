@@ -1,2 +1,0 @@
-# ISTM---Capstone6210
-GWVPS-11
