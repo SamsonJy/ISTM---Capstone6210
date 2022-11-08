@@ -21,7 +21,7 @@
   	  <label>Email</label>
   	  <input type="email" name="email"
       placeholder="Enter your E-mail address: **@**.**"
-      pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/" value="<?php echo $email; ?>">
+      pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" value="<?php echo $email; ?>">
   	</div>
   	<div class="input-group">
   	  <label>Password</label>
