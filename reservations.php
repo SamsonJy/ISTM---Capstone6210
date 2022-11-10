@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php include "../db_connect.php";?>
 <!doctype html>
 <html>
 <head>
@@ -76,8 +76,8 @@
       <div class="reservation_details col-xl-10">
       <div class="upcoming">
         <?php 
-        $
-        include TPL_DIR."reservationCall.php";?>
+        $currentS = "upcoming"
+        include "reservationCall.php";?>
 		   <div class="row justify-content-center">
       <div class="col-8 text center col-xl-12">
         <p class="text muted my-4"> Nothing for now </p>
@@ -94,39 +94,9 @@
 	  	<div class="reservation_details col-xl-5">
           <div id="inprocess" style="display:none;">
           <table style='border:solid 1px black;'>
-          <tr>
-            <th>Reservation ID</th>
-            <th>Garage name</th>
-            <th>Garage Location</th>
-            <th>arrival date</th>
-            <th>arrival time</th>
-            <th>total_charge</th>
-          </tr>
         <?php
-          echo "<table style='border:solid 1px black;'>";
-          echo "<tr><th>Reservation ID</th><th>Garage name</th><th>Garage Location</th><th>arrival date</th><th>arrival time</th><th>total_charge</th>"
-          $servername = "localhost";
-          $username="cxlgo";
-          $password= "zero5397"
-          try{
-            $conn = new PDO("mysql:host=$servername;dbname=GWVP",$username,$password);
-
-            $conn -> setAttribute(PDO::ATTR_ERRMODE,PDD::ERRMODE_EXCEPTION);
-            echo "Connected successfully";
-            $stmt= $conn ->prepare("SELECT rd.reservation_id,g.garage_name,g.garagae_location,
-            rd.arrival_date,rd.arrival_time,rd.total_charge From reservations rd inner join garage g On rd.garage_id = g.garage_id where reservation_status='in-process' ")
-            $stmt ->execute();
-
-            $result = $stmt ->setFetchMode(PDO::FETCH_ASSOC);
-            foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
-              echo $v;
-            }
-            echo "Connected successfully";
-          } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
-          }
-          $conn=null;
-          
+          $currentS = "inprocess"
+          include "reservationCall.php";
         ?>
         </table>
         </div>
@@ -137,37 +107,10 @@
 	  	<div class="reservation_details col-xl-10">
         <div id="passed" style="display:none;">
           <table style='border:solid 1px black;'>
-            <tr>
-              <th>Reservation ID</th>
-              <th>Garage name</th>
-              <th>Garage Location</th>
-              <th>arrival date</th>
-              <th>arrival time</th>
-              <th>total_charge</th>
-          </tr>
-        <?php
-            
-            $checker = "localhost";
-            $username="ISTM6210";
-            $password= "Istm6210Test"
-            try{
-              $conn = new PDO("mysql:host=$servername;dbname=GWVP",$username,$password);
-
-              $conn -> setAttribute(PDO::ATTR_ERRMODE,PDD::ERRMODE_EXCEPTION);
-              echo "Connected successfully";
-              $stmt= $conn ->prepare("SELECT rd.reservation_id,g.garage_name,g.garagae_location,
-              rd.arrival_date,rd.arrival_time,rd.total_charge From reservations rd inner join garage g On rd.garage_id = g.garage_id where reservation_status='passed'; ")
-              $stmt ->execute();
-
-              $result = $stmt ->setFetchMode(PDO::FETCH_ASSOC);
-              foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
-                echo $v;
-              }
-            } catch(PDOException $e) {
-              echo "Error: " . $e->getMessage();
-            }
-            $conn=null;
           
+        <?php
+          $currentS = "passed"
+          include "reservationCall.php"
           ?>
             </table>
         </div>
