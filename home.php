@@ -41,6 +41,7 @@ if(isset($_POST['search'])){
 		<script>
 		$(document).ready(function(){
 				$('input.timepicker').timepicker({
+					timeFormat: 'H:mm ',
 					interval: 60,
 					dynamic: false,
 					dropdown: true,
