@@ -1,13 +1,6 @@
 <?php
 include('db_connect.php' );
 
-//check connection
-/*if(!$conn){
-	echo 'Connection error: ' . mysqli_connect_error();
-}else {
-	echo 'Success!';
-}*/
-
 //Get garages
 $sql = 'SELECT garage_id, garage_name, garage_location, image_url, hourly_price FROM garages ORDER BY hourly_price';
 $result = mysqli_query($conn, $sql);
