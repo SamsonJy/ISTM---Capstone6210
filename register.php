@@ -33,33 +33,16 @@
 
         </div>
     </header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" href="home.php">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-link" href="contact.html">Contact Us</a>
-            </div>
-        </div>
-    </nav>
-    <img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" />
 
 
-    <div class="jumbotron p-5">
+    <div class="p-5">
       <div class="header">
         <h2>Register</h2>
       </div>
 
       <form method="post" action="register.php">
         <?php include('errors.php'); ?>
-        <div class="input-group">
-          <label>Username</label>
-          <input type="text" name="username" placeholder="Enter your username"
-          value="<?php echo $username; ?>">
-        </div>
+
         <div class="input-group">
           <label>Email</label>
           <input type="email" name="email"
