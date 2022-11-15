@@ -1,5 +1,6 @@
 <?php
 include('db_connect.php');
+session_start();
 if(isset($_GET['id'])){
   $id = mysqli_real_escape_string($conn, $_GET['id']);
   $sql = "SELECT * FROM garages WHERE garage_id = $id";
@@ -8,12 +9,15 @@ if(isset($_GET['id'])){
   mysqli_free_result($result);
   mysqli_close($conn);
 
-  //print_r($garage);
 
-  session_start();
+
+
   $totalTimeHour = $_SESSION['totalTimeHour'];
   $price = $garage['hourly_price'] * $totalTimeHour;
-  //echo $price;
+  $_SESSION['total_price'] = $price;
+  $_SESSION['garage'] = $garage['garage_name'];
+  $_SESSION['location'] = $garage['garage_location'];
+
 
 }
 ?>
@@ -155,7 +159,7 @@ if(isset($_GET['id'])){
           </div>
 
           <div class="homeButton">
-            <a id="orderButton" class="btn btn-primary">Place Order</a>
+            <a href="confirmation.php" class="btn btn-primary">Place Order</a>
           </div>
         </form>
       </div>

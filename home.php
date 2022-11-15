@@ -80,7 +80,7 @@ if(isset($_POST['search'])){
 				</div>
 			</div>
 		</nav>
-		<img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" />
+		<img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage"/>
 
 		<div class=" p-4 jumbotron jumbotron-fluid ">
 			<div class="container">

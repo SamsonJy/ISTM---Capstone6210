@@ -1,4 +1,18 @@
-﻿<!DOCTYPE html>
+<?php
+session_start();
+
+$price = $_SESSION['total_price'];
+$startDateString = $_SESSION['startDate'];
+$startTimeString = $_SESSION['startTime'];
+$endDateString = $_SESSION['endDate'];
+$endTimeString = $_SESSION['endTime'];
+$garage = $_SESSION['garage'];
+$location = $_SESSION['location'];
+//$confirmationID = $_SESSION['reservation_id'];
+?>
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -43,7 +57,6 @@
             </div>
         </div>
     </nav>
-    <img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" />
 
 
     <div class="pt-4">
@@ -61,17 +74,34 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <div id="startDateTime" class="py-1"> <span class="d-block text-muted">Arrival Date</span> <span></span> </div>
-                        <div id="endDateTime" class="py-1"> <span class="d-block text-muted">Departure Date</span> <span></span> </div>
-                    </div>
-                    <div class="col">
-                        <div id="garage" class="py-1"> <span class="d-block text-muted">Location</span> <span></span> </div>
-                        <div id="spaceType" class="py-1"> <span class="d-block text-muted">Space Type</span> <span></span> </div>
-                    </div>
-                    <hr />
+
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-md">
+                        <div id="garage" class="py-1"> <span class="d-block text-muted">Garage: </span> <span><?php echo $garage?></span> </div>
+                        <div id="startDateTime" class="py-1"> <span class="d-block text-muted">From: </span> <span><?php echo $startTimeString . "  " . $startDateString?></span> </div>
+
+                    </div>
+                    <div class="col-md">
+                        <div id="location" class="py-1"> <span class="d-block text-muted">Location: </span> <span><?php echo $location?></span> </div>
+                        <div id="endDateTime" class="py-1"> <span class="d-block text-muted">To: </span> <span><?php echo $endTimeString . " " . $endDateString?></span> </div>
+                    </div>
+                    <div class="col"></div>
+
+                </div>
+                  <hr />
+                  <div class="row">
+                      <div class="col">
+                          <h5 class="display-5"><span>Garage Access Code: </span></h5>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col"></div>
+                    <div class="col py-1"> <img src="images/qrcode.png" alt="QR Code" style="  display: block;margin-left: auto;margin-right: auto;height: 200px;width:200px;"> </div>
+                    <div class="col"></div>
+                  </div>
+                </div>
+
             <hr />
 
             <div class="text-center">
@@ -89,17 +119,10 @@
     <br />
 
 
-    <script>
-        document.getElementById("confirmNum").innerHTML = "<span>" + "Confirmation # " + "</span>" + Math.floor(Math.random() * 999999999);
-        document.getElementById("garage").innerHTML = "<span class='d-block text-muted'>" + "Location" + "</span>" + "<span>" + localStorage.getItem("garage") + "</span>";
-        document.getElementById("spaceType").innerHTML = "<span class='d-block text-muted'>" + "Space Type" + "</span>" + "<span>" + localStorage.getItem("spaceType") + "</span>";
-        document.getElementById("startDateTime").innerHTML = "<span class='d-block text-muted'>" + "Arrival Date" + "</span>" + "<span>" + localStorage.getItem("startDateTime") + "</span>";
-        document.getElementById("endDateTime").innerHTML = "<span class='d-block text-muted'>" + "Departure Date" + "</span>" + "<span>" + localStorage.getItem("endDateTime") + "</span>";
 
-    </script>
 
     <div class="footer">
-        <p>6205 Group 9</p>
+        <p>6210 Group A</p>
     </div>
 </body>
 </html>
