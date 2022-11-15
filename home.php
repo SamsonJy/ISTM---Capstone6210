@@ -1,10 +1,15 @@
 <?php
+session_start();
+//$userID = $_SESSION['userID'];
+
 if(isset($_POST['search'])){
-	session_start();
+
 	$_SESSION['startDate'] = $_POST['startDate'];
 	$_SESSION['startTime'] = $_POST['startTime'];
 	$_SESSION['endDate'] = $_POST['endDate'];
 	$_SESSION['endTime'] = $_POST['endTime'];
+
+
 
 	header('Location: garageList.php');
 }

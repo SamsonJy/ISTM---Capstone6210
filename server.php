@@ -75,14 +75,20 @@ if (isset($_POST['login_user'])) {
   	$query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
   	$results = mysqli_query($conn, $query);
 
+
+
   	if (mysqli_num_rows($results) == 1) {
   	  //$_SESSION['username'] = $username;
-  	  $_SESSION['success'] = "You are now logged in";
+      $user = mysqli_fetch_assoc($results);
+  	  $_SESSION['userID'] = $user['user_id'];
   	  header('location: home.php');
   	}else {
   		array_push($errors, "Wrong username/password combination");
   	}
   }
+
+  mysqli_free_result($results);
+  mysqli_close($conn);
 }
 
 ?>
