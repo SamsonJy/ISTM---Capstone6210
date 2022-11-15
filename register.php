@@ -41,7 +41,7 @@
       </div>
 
       <form method="post" action="register.php">
-        <?php include('errors.php'); ?>
+        <?php include('error.php'); ?>
 
         <div class="input-group">
           <label>Email</label>
