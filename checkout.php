@@ -6,10 +6,13 @@ if(isset($_GET['id'])){
   $sql = "SELECT * FROM garages WHERE garage_id = $id";
   $result = mysqli_query($conn, $sql);
   $garage = mysqli_fetch_assoc($result);
-  mysqli_free_result($result);
-  mysqli_close($conn);
 
 
+  //Leo
+  $sql_payments = "SELECT * FROM payments;";
+  $result_payments = mysqli_query($conn, $sql_payments);
+  $sql_vehicles = "SELECT * FROM vehicles;";
+  $result_vehicles = mysqli_query($conn, $sql_vehicles);
 
 
   $totalTimeHour = $_SESSION['totalTimeHour'];
@@ -18,6 +21,8 @@ if(isset($_GET['id'])){
   $_SESSION['garage'] = $garage['garage_name'];
   $_SESSION['location'] = $garage['garage_location'];
 
+  mysqli_free_result($result);
+  mysqli_close($conn);
 
 }
 ?>
@@ -77,86 +82,164 @@ if(isset($_GET['id'])){
       <span class="close">&times;</span>
       <hr>
       <p>Vehicle infomation</p>
+
       <div class="container">
         <form id="paymentForm" class="needs-validation" novalidate>
           <div class="form-group row">
             <div class="col">
-              <label for="mModel">Make & Model: </label>
-              <input type="text" id="mModel" name="mModel" class="form-control" placeholder="Example: Honda Civic" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in your vehicle brand and model.
-              </div>
+              <?php
+              while ($row = mysqli_fetch_assoc($result_vehicles)){
+                echo "<input type='radio' name='vehicleChoice' value=" . $row['vehicle_id'] . "> ";
+                echo $row['plate_number'] . "  " . $row['brand']  ;
+                echo "<br />";
+              }
+               ?>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col">
-              <label for="lPlate">License Plate:</label>
-              <input type="text" id="lPlate" name="licensePlate" class="form-control" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in your license plate number.
+
+          <div class="addVehicle">
+            <p>
+              <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
+                Add vehicle
+              </button>
+            </p>
+          </div>
+
+          <div class="collapse" id="vehicleOption">
+            <div class="card card-body">
+              <div class="form-group row">
+                <div class="col">
+                  <label for="mModel">Make & Model: </label>
+                  <input type="text" id="mModel" name="mModel" class="form-control" placeholder="Example: Honda Civic" required>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">
+                    Please fill in your vehicle brand and model.
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="vColor">Color: </label>
+                  <input type="text" id="vColor" name="vColor" class="form-control" required>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">
+                    Please fill in your vehicle color.
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col">
-              <label for="lPlate">State:</label>
-              <input type="text" id="state" name="licensePlateState" class="form-control" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in the state of your license.
+              <div class="form-group row">
+                <div class="col">
+                  <label for="lPlate">License Plate:</label>
+                  <input type="text" id="lPlate" name="licensePlate" class="form-control" required>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">
+                    Please fill in your license plate number.
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="lPlate">State:</label>
+                  <input type="text" id="state" name="licensePlateState" class="form-control" required>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">
+                    Please fill in the state of your license.
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
           <br />
 
           <hr />
           <p>Payment Method</p>
+
           <div class="form-group row">
             <div class="col">
-              <label for="cName">Cardholder Name: </label>
-              <input type="text" id="cName" name="cardName" class="form-control" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in cardholder name.
+              <?php
+              while ($row = mysqli_fetch_assoc($result_payments)){
+                echo "<input type='radio' name='cardChoice' value=" . $row['payment_id'] . ">    ";
+                echo "Ending in ";
+                $lastFourDigi = substr($row["card_number"], -4);
+                echo $lastFourDigi;
+                echo "<br />";
+              }
+               ?>
+            </div>
+          </div>
+
+          <div class="addPayment">
+            <p>
+              <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
+                Add payment
+              </button>
+            </p>
+            <div class="collapse" id="paymentMethod">
+              <div class="card card-body">
+                <div class="form-group row">
+                  <div class="col">
+                    <label for="cName">Cardholder Name: </label>
+                    <input type="text" id="cName" name="cardName" class="form-control" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                      Please fill in cardholder name.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col">
+                    <label for="cNum">Card Number: </label>
+                    <input type="text" id="cNum" name="cardNum" class="form-control" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                      Please fill in the card number.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col">
+                    <label for="eDate">Expiration Date: </label>
+                    <input type="text" id="eDate" name="expireDate" class="form-control" placeholder="MM/YY" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                      Please fill in the card expiration date.
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="lPlate">CVV/CVC:</label>
+                    <input type="text" id="cvv" name="cvv" class="form-control" placeholder="3 digits" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                      Please fill in the CVV.
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="lPlate">Zip Code:</label>
+                    <input type="text" id="zip" name="zip" class="form-control" placeholder="5 digits" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                      Please fill in the zip code.
+                    </div>
+                  </div>
+
+
+
+                </div>
+
               </div>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col">
-              <label for="cNum">Card Number: </label>
-              <input type="text" id="cNum" name="cardNum" class="form-control" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in the card number.
-              </div>
-            </div>
+
+
+          <br />
+          <hr>
+          <div class="container">
+            <div class="float-right">Total: $<?php echo $price; ?></div>
           </div>
-          <div class="form-group row">
-            <div class="col">
-              <label for="eDate">Expiration Date: </label>
-              <input type="text" id="eDate" name="expireDate" class="form-control" placeholder="MM/YY" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in the card expiration date.
-              </div>
-            </div>
-            <div class="col">
-              <label for="lPlate">CVV/CVC:</label>
-              <input type="text" id="cvv" name="cvv" class="form-control" placeholder="3 digits" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in the CVV.
-              </div>
-            </div>
-            <div class="col">
-              <label for="lPlate">Zip Code:</label>
-              <input type="text" id="zip" name="zip" class="form-control" placeholder="5 digits" required>
-              <div class="valid-feedback"></div>
-              <div class="invalid-feedback">
-                Please fill in the zip code.
-              </div>
-            </div>
+          <br>
+          <br>
+
+          <div class="homeButton">
+            <button class="btn btn-primary" type="submit" value="Add new info">Add new info</button>
           </div>
+          <br>
 
           <div class="homeButton">
             <a href="confirmation.php" class="btn btn-primary">Place Order</a>
