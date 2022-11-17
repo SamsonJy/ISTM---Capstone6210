@@ -43,3 +43,26 @@ function checkDate() {
 	return true;
 };
 
+
+document.getElementById("upcomingR").addEventListener("click", myFunction(this));
+document.getElementById("inprocessR").addEventListener("click", myFunction(this));
+document.getElementById("passedR").addEventListener("click", myFunction(this));
+
+function myFunction(element) {
+  if($(element).id=="upcomingR")
+  {
+	document.getElementById("inprocess").style.display="none";
+	document.getElementById("passed").style.display="none";
+	document.getElementById("upcoming").style.display="inline";
+  } else if ($(element).id=="inprocessR")
+  {
+	document.getElementById("inprocess").style.display="inline";
+	document.getElementById("passed").style.display="none";
+	document.getElementById("upcoming").style.display="none";
+  } else 
+  {
+	document.getElementById("inprocess").style.display="none";
+	document.getElementById("passed").style.display="inline";
+	document.getElementById("upcoming").style.display="none";
+  }
+};
