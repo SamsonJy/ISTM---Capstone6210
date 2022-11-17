@@ -73,12 +73,12 @@
         <div class="in-process-reservation col-xl-10">
           <div class="reservation_details col-xl-5">
               <div id="inprocess" style="display:none;">
-              <table style='border:solid 1px black;'>
+              
             <?php
               $currentS = "inprocess";
               include "reservationCall.php";
             ?>
-            </table>
+            
             </div>
           </div>	
         </div>
@@ -86,13 +86,13 @@
         <div class="finished-Reservation">
           <div class="reservation_details col-xl-10">
             <div id="passed" style="display:none;">
-              <table style='border:solid 1px black;'>
+              
               
             <?php
               $currentS = "passed";
               include "reservationCall.php";
               ?>
-                </table>
+                
             </div>
           </div>	
         </div>
