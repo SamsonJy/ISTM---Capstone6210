@@ -9,7 +9,6 @@ $endTimeString = $_SESSION['endTime'];
 $garage = $_SESSION['garage'];
 $location = $_SESSION['garageLocation'];
 //$confirmationID = $_SESSION['reservation_id'];
-session_unset();
 ?>
 
 
