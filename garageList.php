@@ -1,19 +1,62 @@
+<?php
+include('db_connect.php' );
+
+//Get garages
+$sql = 'SELECT garage_id, garage_name, garage_location, image_url, hourly_price FROM garages ORDER BY hourly_price';
+$result = mysqli_query($conn, $sql);
+$garages = mysqli_fetch_all($result, MYSQLI_ASSOC);
+mysqli_free_result($result);
+mysqli_close($conn);
+
+session_start();
+$startDateString = $_SESSION['startDate'];
+$startTimeString = $_SESSION['startTime'];
+$endDateString = $_SESSION['endDate'];
+$endTimeString = $_SESSION['endTime'];
+
+$date1 = explode('-', $startDateString);
+$date2 = explode('-', $endDateString);
+$time1 = explode(':', $startTimeString);
+$time2 = explode(':', $endTimeString);
+
+$startDate = (int)$date1[0] . $date1[1]. $date1[2];
+$endDate = (int)$date2[0] . $date2[1] . $date2[2];
+$startTimeHour = (int)$time1[0];
+$endTimeHour = (int)$time2[0];
+
+
+$pDate = $endDate - $startDate;
+if ($endTimeHour >= $startTimeHour) {
+	$pTime = $endTimeHour - $startTimeHour;
+	$totalTimeHour = $pDate * 24 + $pTime;
+}else {
+	$pTime = $startTimeHour - $endTimeHour;
+	$totalTimeHour = $pDate * 24 - $pTime;
+}
+
+$_SESSION['totalTimeHour'] = 	$totalTimeHour;
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 		<!-- jQuery library -->
 		<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 		<script>window.jQuery || document.write('<script src="path/to/jquery-3.5.0.js"><\/script>')</script>
-		
+
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
-		
+
 		<script src="js/javaScript.js"></script>
 		<link rel="stylesheet" href="css/styles.css">
 
@@ -31,6 +74,7 @@
 
 			</div>
 		</header>
+
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,73 +82,44 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-					<a class="nav-link active" href="home.html">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link active" href="home.php">Home</a>
 					<a class="nav-link" href="contact.html">Contact Us</a>
 				</div>
 			</div>
 		</nav>
-		<img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" />
+
 
 
 		<div class="pt-4">
 			<div class="container">
 				<div id="garageName">
-					<h3 class="display-5">Select your parking space: </h3>
+					<h3 class="display-5">Select the parking garage: </h3>
 				</div>
 				<hr />
-				<a href="home.html">← Back to the Previous Page</a>
+				<a href="home.php">← Back to the Previous Page</a>
 
-				<div class="row">
-					<div class="col">
-						<div class="post-container">
-							<div class="post-thumb"><img src="images\sedan.png" /></div>
-							<div class="post-content">
-								<h3 class="post-title">Standard Parking<span style="float:right; padding-right:10px;">$10/hr</span></h3>
-								<p><span>Size: </span>8' x 12'</p>
-								<p id="randomNum1"><span>Available Spaces: </span>1</p>
-								<a id="fButton" onclick=" OpenModel();" class="btn btn-primary myBtn">Select</a>
+				<?php foreach($garages as $garage){
+					$price = $garage['hourly_price'] * $totalTimeHour;?>
+					<div class="row">
+							<div class="col">
+								<div class="post-container">
+									<div class="post-thumb"><?php echo '<img src="'.$garage['image_url'] . '"/>'?></div>
+									<div class="post-content">
+										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $price  ?></span></h4>
+										<p><?php echo $garage['garage_location']?></p>
+									  </br>
+										<input type="submit" name="search" value="Search" class="btn btn-primary" onClick="location.href='checkout.php?id=<?php echo $garage['garage_id'] ?>'">
+
+
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+					</br>
+				<?php }?>
 
-				</br>
+<!--
 
-				<div class="row">
-					<div class="col">
-						<div class="post-container">
-							<div class="post-thumb"><img src="images\pickup.png" /></div>
-							<div class="post-content">
-								<h3 class="post-title">XL Parking<span style="float:right; padding-right:10px;">$15/hr</span></h3>
-								<p><span>Size: </span>15' x 30'</p>
-								<p id="randomNum2"><span>Available Spaces: </span>1</p>
-								<a id="sButton" onclick="OpenModel();" class="btn btn-primary myBtn">Select</a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-				</br>
-
-				<div class="row">
-					<div class="col">
-						<div class="post-container">
-							<div class="post-thumb"><img src="images\handicap.png" /></div>
-							<div class="post-content">
-								<h3 class="post-title">Accessible Parking<span style="float:right; padding-right:10px;">$7/hr</span></h3>
-								<p><span>Size: </span>9' x 13'</p>
-								<p id="randomNum3"><span>Available Spaces: </span>1</p>
-								<a id="tButton" onclick="OpenModel();" class="btn btn-primary myBtn">Select</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</br>
-
-		<!-- Modal -->
 		<div id="myModal" class="modal">
 
 			<div class="modal-content">
@@ -260,9 +275,9 @@
 
 
 		</script>
-
+-->
 		<div class="footer">
-			<p>6205 Group 9</p>
+			<p>6210 Group A</p>
 		</div>
 	</body>
 </html>
