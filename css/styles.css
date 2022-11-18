@@ -5,7 +5,7 @@
 	margin-top: 15px;
 }
 
-.optionBar a{	
+.optionBar a{
 	margin-right:50px;
 	display: inline-block;
     font-size: 13pt;
@@ -13,7 +13,7 @@
 }
 
 .optionBar a:link{
-	text-decoration: none;	
+	text-decoration: none;
 }
 
 header img {
@@ -28,7 +28,7 @@ span {
 	padding-top:10px;
 }
 
-.homeButton a {
+.homeButton input {
 	width:40%;
 	font-size: 15px;
 }
@@ -50,7 +50,7 @@ span {
 .footer span {
 	color: #f8f8f8;
 	font-weight: 600;
-		
+
 }
 
 
@@ -136,4 +136,3 @@ body {
 	height: 100vh;
 	margin: 0;
 }
-
