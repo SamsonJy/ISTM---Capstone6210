@@ -75,7 +75,7 @@
 
 
     <div class="footer">
-        <p>6210 Group 1</p>
+        <p>6210 Group A</p>
     </div>
 </body>
 </html>

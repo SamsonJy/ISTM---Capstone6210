@@ -1,14 +1,15 @@
 <?php
 session_start();
 
-$price = $_SESSION['total_price'];
+$price = $_SESSION['price'];
 $startDateString = $_SESSION['startDate'];
 $startTimeString = $_SESSION['startTime'];
 $endDateString = $_SESSION['endDate'];
 $endTimeString = $_SESSION['endTime'];
 $garage = $_SESSION['garage'];
-$location = $_SESSION['location'];
+$location = $_SESSION['garageLocation'];
 //$confirmationID = $_SESSION['reservation_id'];
+session_unset();
 ?>
 
 

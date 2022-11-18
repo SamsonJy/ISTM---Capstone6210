@@ -1,24 +1,73 @@
 <?php
+session_start();
 include('db_connect.php');
+
+$totalTimeHour = $_SESSION['totalTimeHour'];
+$userID = $_SESSION['userID'];
+$startDate = $_SESSION['startDate'];
+$startTime = $_SESSION['startTime'];
+$endDate = $_SESSION['endDate'];
+$endTime = $_SESSION['endTime'];
+
 if(isset($_GET['id'])){
   $id = mysqli_real_escape_string($conn, $_GET['id']);
   $sql = "SELECT * FROM garages WHERE garage_id = $id";
   $result = mysqli_query($conn, $sql);
   $garage = mysqli_fetch_assoc($result);
-  //print_r($garage);
+  $_SESSION['garageID'] = $garage['garage_id'];
+  $_SESSION['price'] = $garage['hourly_price'] * $totalTimeHour;
+  $_SESSION['garageLocation'] = $garage['garage_location'];
+  $_SESSION['garage'] = $garage['garage_name'];
+}
+$price = $_SESSION['price'];
 
-  //Leo
-  $sql_payments = "SELECT * FROM payments;";
-  $result_payments = mysqli_query($conn, $sql_payments);
-  $sql_vehicles = "SELECT * FROM vehicles;";
-  $result_vehicles = mysqli_query($conn, $sql_vehicles);
+
+//Leo
+$sql_payments = "SELECT * FROM payments WHERE user_id = $userID";
+$result_payments = mysqli_query($conn, $sql_payments);
+$sql_vehicles = "SELECT * FROM vehicles WHERE user_id = $userID";
+$result_vehicles = mysqli_query($conn, $sql_vehicles);
 
 
-  session_start();
-  $totalTimeHour = $_SESSION['totalTimeHour'];
-  $price = $garage['hourly_price'] * $totalTimeHour;
-  //echo $price;
 
+
+//INSERT
+if(isset($_POST['submit'])){
+  if(isset($_POST['saveVehicleInfo'])){
+    $brand = mysqli_real_escape_string($conn, $_POST['vModel']);
+    $color = mysqli_real_escape_string($conn, $_POST['vColor']);
+    $plate_number = mysqli_real_escape_string($conn, $_POST['lPlate']);
+    $state = mysqli_real_escape_string($conn, $_POST['state']);
+    $sql_vehicle = "INSERT INTO vehicles(brand, color, plate_number, state, user_id) VALUES ('$brand', '$color', '$plate_number', '$state', '$userID')";
+    mysqli_query($conn, $sql_vehicle);
+  }
+  if(isset($_POST['savePaymentInfo'])){
+    $cardholder_name = mysqli_real_escape_string($conn, $_POST['cardName']);
+    $card_number = mysqli_real_escape_string($conn, $_POST['cardNum']);
+    $cvv0 = mysqli_real_escape_string($conn, $_POST['cvv']);
+    $cvv = md5($cvv0);
+    $expiration_date = mysqli_real_escape_string($conn, $_POST['expireDate']);
+    $zip_code = mysqli_real_escape_string($conn, $_POST['zip']);
+    $sql_payment = "INSERT INTO payments(cardholder_name, card_number, cvv, expiration_date, zip_code, user_id) VALUES ('$cardholder_name', '$card_number', '$cvv', '$expiration_date', '$zip_code', '$userID')";
+    mysqli_query($conn, $sql_payment);
+
+  }
+//TBF
+  $sql_vehicleID = "SELECT vehicle_id FROM vehicles WHERE plate_number = '$plate_number' AND state = '$state'";
+  $vehicleResult = mysqli_query($conn, $sql_vehicleID);
+  $theVehicle = mysqli_fetch_assoc($vehicleResult);
+  $_SESSION['vehicleID'] = $theVehicle['vehicle_id'];
+  $sql_paymentID = "SELECT payment_id FROM payments WHERE card_number = '$card_number' AND cvv = '$cvv'";
+  $paymentResult = mysqli_query($conn, $sql_paymentID);
+  $thePayment = mysqli_fetch_assoc($paymentResult);
+  $_SESSION['paymentID'] = $thePayment['payment_id'];
+
+  $garageID = $_SESSION['garageID'];
+  $vehicleID = $_SESSION['vehicleID'];
+  $paymentID = $_SESSION['paymentID'];
+  $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+  mysqli_query($conn, $sql_reservation);
+  header('Location: confirmation.php');
 }
 ?>
 
@@ -74,7 +123,7 @@ if(isset($_GET['id'])){
     <div class="modal-content">
 
       <div class=container>
-        <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">edit</a></p>
+        <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">Edit</a></p>
       </div>
       <br />
       <span class="close">&times;</span>
@@ -82,7 +131,7 @@ if(isset($_GET['id'])){
       <p>Vehicle infomation</p>
 
       <div class="container">
-        <form action="insert.php" id="paymentForm" class="needs-validation" method="POST" novalidate>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="paymentForm" class="needs-validation" method="POST" novalidate>
           <div class="form-group row">
             <div class="col">
               <?php
@@ -98,7 +147,7 @@ if(isset($_GET['id'])){
           <div class="addVehicle">
             <p>
               <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
-                Add vehicle
+                New vehicle
               </button>
             </p>
 
@@ -107,8 +156,8 @@ if(isset($_GET['id'])){
             <div class="card card-body">
               <div class="form-group row">
                 <div class="col">
-                  <label for="mModel">Make & Model: </label>
-                  <input type="text" id="mModel" name="mModel" class="form-control" placeholder="Example: Honda Civic" required>
+                  <label for="vModel">Make & Model: </label>
+                  <input type="text"  name="vModel" class="form-control" placeholder="Example: Honda Civic" required>
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback">
                     Please fill in your vehicle brand and model.
@@ -116,7 +165,7 @@ if(isset($_GET['id'])){
                 </div>
                 <div class="col">
                   <label for="vColor">Color: </label>
-                  <input type="text" id="vColor" name="vColor" class="form-control" required>
+                  <input type="text" name="vColor" class="form-control" required>
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback">
                     Please fill in your vehicle color.
@@ -126,20 +175,24 @@ if(isset($_GET['id'])){
               <div class="form-group row">
                 <div class="col">
                   <label for="lPlate">License Plate:</label>
-                  <input type="text" id="lPlate" name="licensePlate" class="form-control" required>
+                  <input type="text" name="lPlate" class="form-control" required>
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback">
                     Please fill in your license plate number.
                   </div>
                 </div>
                 <div class="col">
-                  <label for="lPlate">State:</label>
-                  <input type="text" id="state" name="licensePlateState" class="form-control" required>
+                  <label for="state">State:</label>
+                  <input type="text" name="state" class="form-control" required>
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback">
                     Please fill in the state of your license.
                   </div>
                 </div>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="saveVehicleInfo">
+                <label class="form-check-label" for="exampleCheck1">Save Vehicle Info</label>
               </div>
 
             </div>
@@ -167,15 +220,15 @@ if(isset($_GET['id'])){
           <div class="addPayment">
             <p>
               <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
-                Add payment
+                New payment
               </button>
             </p>
             <div class="collapse" id="paymentMethod">
               <div class="card card-body">
                 <div class="form-group row">
                   <div class="col">
-                    <label for="cName">Cardholder Name: </label>
-                    <input type="text" id="cName" name="cardName" class="form-control" required>
+                    <label for="cardName">Cardholder Name: </label>
+                    <input type="text"  name="cardName" class="form-control" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
                       Please fill in cardholder name.
@@ -184,8 +237,8 @@ if(isset($_GET['id'])){
                 </div>
                 <div class="form-group row">
                   <div class="col">
-                    <label for="cNum">Card Number: </label>
-                    <input type="text" id="cNum" name="cardNum" class="form-control" required>
+                    <label for="cardNum">Card Number: </label>
+                    <input type="text" name="cardNum" class="form-control" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
                       Please fill in the card number.
@@ -194,15 +247,15 @@ if(isset($_GET['id'])){
                 </div>
                 <div class="form-group row">
                   <div class="col">
-                    <label for="eDate">Expiration Date: </label>
-                    <input type="text" id="eDate" name="expireDate" class="form-control" placeholder="MM/YY" required>
+                    <label for="expireDate">Expiration Date: </label>
+                    <input type="text" name="expireDate" class="form-control" placeholder="MM/YY" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
                       Please fill in the card expiration date.
                     </div>
                   </div>
                   <div class="col">
-                    <label for="lPlate">CVV/CVC:</label>
+                    <label for="cvv">CVV/CVC:</label>
                     <input type="text" id="cvv" name="cvv" class="form-control" placeholder="3 digits" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
@@ -210,7 +263,7 @@ if(isset($_GET['id'])){
                     </div>
                   </div>
                   <div class="col">
-                    <label for="lPlate">Zip Code:</label>
+                    <label for="zip">Zip Code:</label>
                     <input type="text" id="zip" name="zip" class="form-control" placeholder="5 digits" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
@@ -220,6 +273,10 @@ if(isset($_GET['id'])){
 
 
 
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" name="savePaymentInfo">
+                  <label class="form-check-label" for="exampleCheck1">Save Payment Info</label>
                 </div>
 
               </div>
@@ -235,11 +292,7 @@ if(isset($_GET['id'])){
           <br>
 
           <div class="homeButton">
-            <button class="btn btn-primary" type="submit" value="Add new info">Add new info</button>
-          </div>
-          <br>
-          <div class="homeButton">
-            <a id="orderButton" class="btn btn-primary" >Place Order</a>
+            <input type="submit" name="submit" value="Place Order" class="btn btn-primary">
           </div>
         </form>
       </div>
