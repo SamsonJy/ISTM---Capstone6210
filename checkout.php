@@ -123,7 +123,7 @@ if(isset($_POST['submit'])){
     <div class="modal-content">
 
       <div class=container>
-        <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">Edit</a></p>
+        <p>Garage: <?php echo htmlspecialchars($garage['garage_name']) ?> <a href="garageList.php">Edit</a></p>
       </div>
       <br />
       <span class="close">&times;</span>
@@ -136,8 +136,8 @@ if(isset($_POST['submit'])){
             <div class="col">
               <?php
               while ($row = mysqli_fetch_assoc($result_vehicles)){
-                echo "<input type='radio' name='vehicleChoice' value=" . $row['vehicle_id'] . "> ";
-                echo $row['plate_number'] . "  " . $row['brand']  ;
+                echo "<input type='radio' name='vehicleChoice' value=" . htmlspecialchars($row['vehicle_id']) . "> ";
+                echo htmlspecialchars($row['plate_number']) . "  " . htmlspecialchars($row['brand'])  ;
                 echo "<br />";
               }
                ?>
@@ -208,10 +208,10 @@ if(isset($_POST['submit'])){
             <div class="col">
               <?php
               while ($row = mysqli_fetch_assoc($result_payments)){
-                echo "<input type='radio' name='cardChoice' value=" . $row['payment_id'] . ">    ";
+                echo "<input type='radio' name='cardChoice' value=" . htmlspecialchars($row['payment_id']) . ">    ";
                 echo "Ending in ";
                 $lastFourDigi = substr($row["card_number"], -4);
-                echo $lastFourDigi;
+                echo htmlspecialchars($lastFourDigi);
                 echo "<br />";
               }
                ?>
@@ -286,7 +286,7 @@ if(isset($_POST['submit'])){
           <br />
           <hr>
           <div class="container">
-            <div class="float-right">Total: $<?php echo $price; ?></div>
+            <div class="float-right">Total: $<?php echo htmlspecialchars($price) ?></div>
           </div>
           <br>
           <br>

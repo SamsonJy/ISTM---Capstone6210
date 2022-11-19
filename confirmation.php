@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+$garageID = $_SESSION['garageID'];
 $price = $_SESSION['price'];
 $startDateString = $_SESSION['startDate'];
 $startTimeString = $_SESSION['startTime'];
@@ -8,8 +9,7 @@ $endDateString = $_SESSION['endDate'];
 $endTimeString = $_SESSION['endTime'];
 $garage = $_SESSION['garage'];
 $location = $_SESSION['garageLocation'];
-//$confirmationID = $_SESSION['reservation_id'];
-session_unset();
+
 ?>
 
 
@@ -71,7 +71,7 @@ session_unset();
             <div class="jumbotron p-3">
                 <div class="row">
                     <div class="col">
-                        <h5 id="confirmNum" class="display-5"><span>Confirmation # </span>123456789</h5>
+                        <h5 id="confirmNum" class="display-5"><span>Confirmation # </span><?php echo htmlspecialchars($garageID) ?></h5>
                     </div>
                 </div>
                 <div class="row">
@@ -79,13 +79,13 @@ session_unset();
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <div id="garage" class="py-1"> <span class="d-block text-muted">Garage: </span> <span><?php echo $garage?></span> </div>
-                        <div id="startDateTime" class="py-1"> <span class="d-block text-muted">From: </span> <span><?php echo $startTimeString . "  " . $startDateString?></span> </div>
+                        <div id="garage" class="py-1"> <span class="d-block text-muted">Garage: </span> <span><?php echo htmlspecialchars($garage)?></span> </div>
+                        <div id="startDateTime" class="py-1"> <span class="d-block text-muted">From: </span> <span><?php echo htmlspecialchars($startTimeString) . "  " . htmlspecialchars($startDateString)?></span> </div>
 
                     </div>
                     <div class="col-md">
-                        <div id="location" class="py-1"> <span class="d-block text-muted">Location: </span> <span><?php echo $location?></span> </div>
-                        <div id="endDateTime" class="py-1"> <span class="d-block text-muted">To: </span> <span><?php echo $endTimeString . " " . $endDateString?></span> </div>
+                        <div id="location" class="py-1"> <span class="d-block text-muted">Location: </span> <span><?php echo htmlspecialchars($location)?></span> </div>
+                        <div id="endDateTime" class="py-1"> <span class="d-block text-muted">To: </span> <span><?php echo htmlspecialchars($endTimeString) . " " . htmlspecialchars($endDateString)?></span> </div>
                     </div>
                     <div class="col"></div>
 
