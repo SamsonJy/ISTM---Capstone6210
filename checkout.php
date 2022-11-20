@@ -131,9 +131,9 @@ if(isset($_POST['submit'])){
       <p>Vehicle infomation</p>
 
       <div class="container">
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="paymentForm" class="needs-validation" method="POST" novalidate>
+        <form action="insert.php" id="paymentForm" class="needs-validation" method="POST" novalidate>
           <div class="form-group row">
-            <div class="col">
+            <div class="col vehicle" id="vehicleSelected">
               <?php
               while ($row = mysqli_fetch_assoc($result_vehicles)){
                 echo "<input type='radio' name='vehicleChoice' value=" . $row['vehicle_id'] . "> ";
@@ -146,7 +146,7 @@ if(isset($_POST['submit'])){
 
           <div class="addVehicle">
             <p>
-              <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
+              <button id="newVehicle" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
                 New vehicle
               </button>
             </p>
@@ -205,7 +205,7 @@ if(isset($_POST['submit'])){
           <p>Payment Method</p>
 
           <div class="form-group row">
-            <div class="col">
+            <div class="col payment" id="paymentSelected">
               <?php
               while ($row = mysqli_fetch_assoc($result_payments)){
                 echo "<input type='radio' name='cardChoice' value=" . $row['payment_id'] . ">    ";
@@ -219,7 +219,7 @@ if(isset($_POST['submit'])){
           </div>
           <div class="addPayment">
             <p>
-              <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
+              <button id="newPayment" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
                 New payment
               </button>
             </p>
@@ -304,4 +304,44 @@ if(isset($_POST['submit'])){
 			<p>6210 Group A</p>
 		</div>
 	</body>
+  <script type="text/javascript">
+    // vehicle disabled
+    var new_vehicle = document.getElementById("newVehicle");
+    new_vehicle.addEventListener("click", toggleDisabledVehicle);
+    function toggleDisabledVehicle(){
+      var showToggleV = document.querySelectorAll(".vehicle input[type='radio']");
+      var vehicle_showV = document.getElementById("vehicleOption");
+      for (var i = 0; i < showToggleV.length; i++) {
+        if (vehicle_showV.classList.contains("show")) {
+          showToggleV[i].disabled = false;
+        } else {
+          showToggleV[i].disabled = true;
+        }
+      }
+    }
+
+    // payment disabled
+    var new_payment = document.getElementById("newPayment");
+    new_payment.addEventListener("click", toggleDisabledPayment);
+    function toggleDisabledPayment(){
+      var showToggleP = document.querySelectorAll(".payment input[type='radio']");
+      var vehicle_showP = document.getElementById("paymentMethod");
+      for (var i = 0; i < showToggleP.length; i++) {
+        if (vehicle_showP.classList.contains("show")) {
+          showToggleP[i].disabled = false;
+        } else {
+          showToggleP[i].disabled = true;
+        }
+      }
+    }
+
+
+  // if (vehicle_show.classList.contains("show")) {
+  //   var showToggle = document.querySelectorAll(".vehicle input[type='radio']");
+  //   for (var i = 0; i < showToggle.length; i++) {
+  //     showToggle[i].disabled = true;
+  //   }
+  // }
+
+  </script>
 </html>
