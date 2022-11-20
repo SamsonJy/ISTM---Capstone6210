@@ -67,12 +67,11 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 		<header>
 			<div>
 				<div class="container-fluid">
-					<div>
-						<h3 class="display-4">GWU Parking System</h3>
+					<div style="float:right;margin:20px">
+						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
 					</div>
+					<h3 class="display-4">GW Parking System</h3>
 				</div>
-
-			</div>
 		</header>
 
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">

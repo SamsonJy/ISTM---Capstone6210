@@ -36,16 +36,15 @@ $location = $_SESSION['garageLocation'];
 </head>
 
 <body>
-    <header>
-        <div>
-            <div class="container-fluid">
-                <div>
-                    <h3 class="display-4">GWU Parking System</h3>
-                </div>
-            </div>
-
+  <header>
+    <div>
+      <div class="container-fluid">
+        <div style="float:right;margin:20px">
+          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
         </div>
-    </header>
+        <h3 class="display-4">GW Parking System</h3>
+      </div>
+  </header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
