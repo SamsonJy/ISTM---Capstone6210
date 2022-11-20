@@ -26,3 +26,4 @@ function show(n) {
     document.getElementById("table3").style.display="none";
     document.getElementById("table" + t).style.display="block";
 };
+
