@@ -52,7 +52,7 @@ if(isset($_POST['submit'])){
     mysqli_query($conn, $sql_payment);
 
   }
-//TBF
+//TBF - finished
   $sql_vehicleID = "SELECT vehicle_id FROM vehicles WHERE plate_number = '$plate_number' AND state = '$state'";
   $vehicleResult = mysqli_query($conn, $sql_vehicleID);
   $theVehicle = mysqli_fetch_assoc($vehicleResult);
@@ -61,11 +61,52 @@ if(isset($_POST['submit'])){
   $paymentResult = mysqli_query($conn, $sql_paymentID);
   $thePayment = mysqli_fetch_assoc($paymentResult);
   $_SESSION['paymentID'] = $thePayment['payment_id'];
-
+// test condition 2
   $garageID = $_SESSION['garageID'];
-  $vehicleID = $_SESSION['vehicleID'];
-  $paymentID = $_SESSION['paymentID'];
-  $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+  if (isset($_POST['cardChoice'])) {
+    if (isset($_POST['vehicleChoice'])) {
+      $vehicleID = $_POST['vehicleChoice'];
+      $paymentID = $_POST['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    } elseif (isset($_POST['saveVehicleInfo'])) {
+      $vehicleID = $_SESSION['vehicleID'];
+      $paymentID = $_POST['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    } else {
+      // $vehicleID = NULL;
+      $paymentID = $_POST['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', NULL, '$paymentID')";
+    }
+
+  } elseif (isset($_POST['savePaymentInfo'])) {
+    if (isset($_POST['vehicleChoice'])) {
+      $vehicleID = $_POST['vehicleChoice'];
+      $paymentID = $_SESSION['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    } elseif (isset($_POST['saveVehicleInfo'])) {
+      $vehicleID = $_SESSION['vehicleID'];
+      $paymentID = $_SESSION['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    } else {
+      // $vehicleID = NULL;
+      $paymentID = $_SESSION['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', NULL, '$paymentID')";
+    }
+  } else {
+    if (isset($_POST['vehicleChoice'])) {
+      $vehicleID = $_POST['vehicleChoice'];
+      // $paymentID = NULL;
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', NULL)";
+    } elseif (isset($_POST['saveVehicleInfo'])) {
+      $vehicleID = $_SESSION['vehicleID'];
+      // $paymentID = NULL;
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', NULL)";
+    } else {
+      // $vehicleID = NULL;
+      // $paymentID = NULL;
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', NULL, NULL)";
+    }
+  }
   mysqli_query($conn, $sql_reservation);
   header('Location: confirmation.php');
 }
@@ -131,7 +172,7 @@ if(isset($_POST['submit'])){
       <p>Vehicle infomation</p>
 
       <div class="container">
-        <form action="insert.php" id="paymentForm" class="needs-validation" method="POST" novalidate>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="paymentForm" class="needs-validation" method="POST" novalidate>
           <div class="form-group row">
             <div class="col vehicle" id="vehicleSelected">
               <?php
