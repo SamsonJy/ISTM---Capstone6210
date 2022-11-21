@@ -38,6 +38,8 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 
 
 
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -101,12 +103,12 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 					<div class="row">
 							<div class="col">
 								<div class="post-container">
-									<div class="post-thumb"><?php echo '<img src="'.$garage['image_url'] . '"/>'?></div>
+									<div class="post-thumb"><?php echo '<img src="'.htmlspecialchars($garage['image_url']) . '"/>'?></div>
 									<div class="post-content">
-										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $price  ?></span></h4>
-										<p><?php echo $garage['garage_location']?></p>
+										<h4 class="post-title"><?php echo htmlspecialchars($garage['garage_name'])?><span style="float:right; padding-right:10px;"><?php echo "$" . htmlspecialchars($price)  ?></span></h4>
+										<p><?php echo htmlspecialchars($garage['garage_location'])?></p>
 									  </br>
-										<input type="submit" name="search" value="Search" class="btn btn-primary" onClick="location.href='checkout.php?id=<?php echo $garage['garage_id'] ?>'">
+										<input type="submit" name="search" value="Search" class="btn btn-primary" onClick="location.href='checkout.php?id=<?php echo htmlspecialchars($garage['garage_id']) ?>'">
 
 
 									</div>
