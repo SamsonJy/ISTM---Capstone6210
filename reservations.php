@@ -97,7 +97,7 @@ mysqli_close($conn);
             <button type="button" onclick='show(2);'>Upcoming Reservations</button>
             <button type="button" onclick='show(3);'>Past Reservations</button>
           </div>
-          </br></br>
+          </br>
 
 
           <table class="table" id="table1">
@@ -126,10 +126,6 @@ mysqli_close($conn);
 
           </table>
 
-            </br>
-
-
-
             <table class="table" id="table2">
               <thead>
                 <tr>
@@ -153,9 +149,6 @@ mysqli_close($conn);
                 <?php }?>
               </tbody>
             </table>
-
-              </br>
-
 
               <table class="table" id="table3">
                 <thead>
@@ -232,11 +225,13 @@ mysqli_close($conn);
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Cancel Reservation</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="cancel" onclick="cancelFunction()" style="display:none;">Cancel Reservation</button>
+            <button type="button" class="btn btn-primary" id="extend" onclick="extendFunction()">Extend Reservation</button>
           </div>
         </div>
       </div>
+
       <?php
       $json_garage = json_encode($garages);
       $json_payment = json_encode($payments);
@@ -249,16 +244,26 @@ mysqli_close($conn);
       <script>
           //functions for modal
         $('#detail-modal').on('show.bs.modal', function (event) {
+          //change the modal table use the data passed from data-whatever
           var button = $(event.relatedTarget) 
-          var record = button.data('whatever') // Extract info from data-* attributes
-          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+          var record = button.data('whatever') 
           var modal = $(this)
           var vehicle = vehicles[record['vehicle_id']-1];
           var payment = paymentM[record['payment_id']-1];
           var garage1 = garagesD[record['garage_id']];
-          console.log(garagesD);
-          //var vehicle = vehicles[record['vehicle_id']]
+          console.log(record['reservation_status']);
+
+          var rid = record['reservation_id'];
+          if(record['reservation_status']=="Upcoming"){
+            document.getElementById("cancel").style.display ="Block";
+            document.getElementById("extend").style.display ="none";
+          } else if(record['reservation_status']=="Finished"||record['reservation_status']=="Cancelled"){
+            document.getElementById("extend").style.display ="none";
+            document.getElementById("cancel").style.display ="none";
+          } else if(record['reservation_status']=="Ongoing"){
+            document.getElementById("extend").style.display ="Block";
+            document.getElementById("cancel").style.display ="none";
+          }
           modal.find('.modal-title').text('Reservation Details: ' + record['reservation_id'])
           modal.find('.modal-body #garageN').text(garage1['garage_name'])
           modal.find('.modal-body #garageD').text(garage1['garage_location'])
@@ -269,6 +274,34 @@ mysqli_close($conn);
           modal.find('.modal-body #vehicleC').text(vehicle['color'])
           modal.find('.modal-body #paymentNum').text(payment['card_number'])
         })
+      </script>
+
+      <script>
+        //function for cancal redirect
+        function cancelFunction(){
+          if(confirm("Do you want to cancel this order?")){
+              //$_SESSION['reservation_change'] = record['reservation_id'];
+              alert("Reservation cancal Sucessfully!");
+            <?php
+              include('db_connect.php' );
+              $sqlCancel = "UPDATE reservations SET reservation_status = 'Cancelled' WHERE reservation_id = 'rid'";
+              $upcomingResult = mysqli_query($conn, $sqlUpcoming);
+              mysqli_close($conn);
+            ?>
+
+             
+            location.reload();
+          } else {
+
+          }
+
+        }
+
+        function extendFunction(){
+          if(confirm("Do you want to cancel this order?")){
+            location.href="extendPage.php";
+          }
+        }
       </script>
     </div>
     
