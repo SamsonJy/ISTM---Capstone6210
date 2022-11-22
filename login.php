@@ -23,16 +23,7 @@
 </head>
 
 <body>
-    <header>
-        <div>
-            <div class="container-fluid">
-                <div>
-                    <h3 class="display-4">GWU Parking System</h3>
-                </div>
-            </div>
 
-        </div>
-    </header>
 
     <div class="p-5">
       <div class="header">

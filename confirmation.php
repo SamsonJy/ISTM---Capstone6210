@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+$garageID = $_SESSION['garageID'];
 $price = $_SESSION['price'];
 $startDateString = $_SESSION['startDate'];
 $startTimeString = $_SESSION['startTime'];
@@ -8,8 +9,7 @@ $endDateString = $_SESSION['endDate'];
 $endTimeString = $_SESSION['endTime'];
 $garage = $_SESSION['garage'];
 $location = $_SESSION['garageLocation'];
-//$confirmationID = $_SESSION['reservation_id'];
-session_unset();
+
 ?>
 
 
@@ -36,29 +36,37 @@ session_unset();
 </head>
 
 <body>
-    <header>
-        <div>
-            <div class="container-fluid">
-                <div>
-                    <h3 class="display-4">GWU Parking System</h3>
-                </div>
-            </div>
-
+  <header>
+    <div>
+      <div class="container-fluid">
+        <div style="float:right;margin:20px">
+          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
         </div>
-    </header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h3 class="display-4">GW Parking System</h3>
+      </div>
+  </header>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" href="home.html">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-link" href="contact.html">Contact Us</a>
-            </div>
-        </div>
-    </nav>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="home.php">Home</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Reservations</a>
+        </li>
 
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">My Account</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
     <div class="pt-4">
         <div class="container">
@@ -71,7 +79,7 @@ session_unset();
             <div class="jumbotron p-3">
                 <div class="row">
                     <div class="col">
-                        <h5 id="confirmNum" class="display-5"><span>Confirmation # </span>123456789</h5>
+                        <h5 id="confirmNum" class="display-5"><span>Confirmation # </span><?php echo htmlspecialchars($garageID) ?></h5>
                     </div>
                 </div>
                 <div class="row">
@@ -79,13 +87,13 @@ session_unset();
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <div id="garage" class="py-1"> <span class="d-block text-muted">Garage: </span> <span><?php echo $garage?></span> </div>
-                        <div id="startDateTime" class="py-1"> <span class="d-block text-muted">From: </span> <span><?php echo $startTimeString . "  " . $startDateString?></span> </div>
+                        <div id="garage" class="py-1"> <span class="d-block text-muted">Garage: </span> <span><?php echo htmlspecialchars($garage)?></span> </div>
+                        <div id="startDateTime" class="py-1"> <span class="d-block text-muted">From: </span> <span><?php echo htmlspecialchars($startTimeString) . "  " . htmlspecialchars($startDateString)?></span> </div>
 
                     </div>
                     <div class="col-md">
-                        <div id="location" class="py-1"> <span class="d-block text-muted">Location: </span> <span><?php echo $location?></span> </div>
-                        <div id="endDateTime" class="py-1"> <span class="d-block text-muted">To: </span> <span><?php echo $endTimeString . " " . $endDateString?></span> </div>
+                        <div id="location" class="py-1"> <span class="d-block text-muted">Location: </span> <span><?php echo htmlspecialchars($location)?></span> </div>
+                        <div id="endDateTime" class="py-1"> <span class="d-block text-muted">To: </span> <span><?php echo htmlspecialchars($endTimeString) . " " . htmlspecialchars($endDateString)?></span> </div>
                     </div>
                     <div class="col"></div>
 

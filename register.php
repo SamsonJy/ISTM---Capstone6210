@@ -23,16 +23,7 @@
 </head>
 
 <body>
-    <header>
-        <div>
-            <div class="container-fluid">
-                <div>
-                    <h3 class="display-4">GWU Parking System</h3>
-                </div>
-            </div>
 
-        </div>
-    </header>
 
 
     <div class="p-5">
@@ -46,8 +37,8 @@
         <div class="input-group">
           <label>Email</label>
           <input type="email" name="email"
-          placeholder="Enter your E-mail address: **@**.**"
-          pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" value="<?php echo $email; ?>">
+          placeholder="Enter your E-mail address: **@**.***"
+          pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" value="<?php echo htmlspecialchars($email) ?>">
         </div>
         <div class="input-group">
           <label>Password</label>
