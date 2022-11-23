@@ -74,7 +74,7 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 				</div>
 		</header>
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="collapse navbar-collapse" id="navbarNav">
 		    <ul class="navbar-nav">
 		      <li class="nav-item active">
