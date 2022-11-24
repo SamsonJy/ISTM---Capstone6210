@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 //$userID = $_SESSION['userID'];
 
@@ -66,25 +67,34 @@ if(isset($_POST['search'])){
 		<header>
 			<div>
 				<div class="container-fluid">
-					<div>
-						<h3 class="display-4">GWU Parking System</h3>
+					<div style="float:right;margin:20px">
+						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
 					</div>
+					<h3 class="display-4">GW Parking System</h3>
 				</div>
-
-			</div>
 		</header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item active">
+		        <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Reservations</a>
+		      </li>
 
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-link active" href="home.php">Home <span class="sr-only">(current)</span></a>
-					<a class="nav-link" href="contact.html">Contact Us</a>
-				</div>
-			</div>
+		    </ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">My Account</a>
+					</li>
+				</ul>
+		  </div>
 		</nav>
+
 		<img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage"/>
 
 		<div class=" p-4 jumbotron jumbotron-fluid ">
@@ -140,15 +150,6 @@ if(isset($_POST['search'])){
 
 
 
-
-		<div class="container">
-			<div class="wow fadeInUp" data-wow-delay="0.4s">
-				<div id="google-map">
-					<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1Hz2MLqzJ90IacvlszfgTOZit8en0GmX0&ehbc=2E312F" width="1110" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-				</div>
-			</div>
-		</div>
-		<br />
 
 		<script>
 		var today = new Date();

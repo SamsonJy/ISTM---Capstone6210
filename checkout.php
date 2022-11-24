@@ -96,34 +96,42 @@ if(isset($_POST['submit'])){
 	</head>
 
 	<body>
-		<header>
+    <header>
 			<div>
 				<div class="container-fluid">
-					<div>
-						<h3 class="display-4">GWU Parking System</h3>
+					<div style="float:right;margin:20px">
+						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
 					</div>
+					<h3 class="display-4">GW Parking System</h3>
 				</div>
-
-			</div>
 		</header>
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item">
+		        <a class="nav-link" href="home.php">Home</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Reservations</a>
+		      </li>
 
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-link active" href="home.php">Home</a>
-					<a class="nav-link" href="contact.html">Contact Us</a>
-				</div>
-			</div>
+		    </ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">My Account</a>
+					</li>
+				</ul>
+		  </div>
 		</nav>
 
     <div class="modal-content">
 
       <div class=container>
-        <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">Edit</a></p>
+        <p>Garage: <?php echo htmlspecialchars($garage['garage_name']) ?> <a href="garageList.php">Edit</a></p>
       </div>
       <br />
       <span class="close">&times;</span>
@@ -136,8 +144,8 @@ if(isset($_POST['submit'])){
             <div class="col">
               <?php
               while ($row = mysqli_fetch_assoc($result_vehicles)){
-                echo "<input type='radio' name='vehicleChoice' value=" . $row['vehicle_id'] . "> ";
-                echo $row['plate_number'] . "  " . $row['brand']  ;
+                echo "<input type='radio' name='vehicleChoice' value=" . htmlspecialchars($row['vehicle_id']) . "> ";
+                echo htmlspecialchars($row['plate_number']) . "  " . htmlspecialchars($row['brand'])  ;
                 echo "<br />";
               }
                ?>
@@ -208,10 +216,10 @@ if(isset($_POST['submit'])){
             <div class="col">
               <?php
               while ($row = mysqli_fetch_assoc($result_payments)){
-                echo "<input type='radio' name='cardChoice' value=" . $row['payment_id'] . ">    ";
+                echo "<input type='radio' name='cardChoice' value=" . htmlspecialchars($row['payment_id']) . ">    ";
                 echo "Ending in ";
                 $lastFourDigi = substr($row["card_number"], -4);
-                echo $lastFourDigi;
+                echo htmlspecialchars($lastFourDigi);
                 echo "<br />";
               }
                ?>
@@ -286,7 +294,7 @@ if(isset($_POST['submit'])){
           <br />
           <hr>
           <div class="container">
-            <div class="float-right">Total: $<?php echo $price; ?></div>
+            <div class="float-right">Total: $<?php echo htmlspecialchars($price) ?></div>
           </div>
           <br>
           <br>
@@ -298,6 +306,7 @@ if(isset($_POST['submit'])){
       </div>
 
     </div>
+    <br />
 
 
 		<div class="footer">

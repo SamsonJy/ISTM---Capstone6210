@@ -67,27 +67,34 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 		<header>
 			<div>
 				<div class="container-fluid">
-					<div>
-						<h3 class="display-4">GWU Parking System</h3>
+					<div style="float:right;margin:20px">
+						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
 					</div>
+					<h3 class="display-4">GW Parking System</h3>
 				</div>
-
-			</div>
 		</header>
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item">
+		        <a class="nav-link" href="home.php">Home</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Reservations</a>
+		      </li>
 
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-link active" href="home.php">Home</a>
-					<a class="nav-link" href="contact.html">Contact Us</a>
-				</div>
-			</div>
+		    </ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">My Account</a>
+					</li>
+				</ul>
+		  </div>
 		</nav>
-
 
 
 		<div class="pt-4">
@@ -103,12 +110,12 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 					<div class="row">
 							<div class="col">
 								<div class="post-container">
-									<div class="post-thumb"><?php echo '<img src="'.$garage['image_url'] . '"/>'?></div>
+									<div class="post-thumb"><?php echo '<img src="'.htmlspecialchars($garage['image_url']) . '"/>'?></div>
 									<div class="post-content">
-										<h4 class="post-title"><?php echo $garage['garage_name']?><span style="float:right; padding-right:10px;"><?php echo "$" . $price  ?></span></h4>
-										<p><?php echo $garage['garage_location']?></p>
+										<h4 class="post-title"><?php echo htmlspecialchars($garage['garage_name'])?><span style="float:right; padding-right:10px;"><?php echo "$" . htmlspecialchars($price)  ?></span></h4>
+										<p><?php echo htmlspecialchars($garage['garage_location'])?></p>
 									  </br>
-										<input type="submit" name="search" value="Search" class="btn btn-primary" onClick="location.href='checkout.php?id=<?php echo $garage['garage_id'] ?>'">
+										<input type="submit" name="search" value="Search" class="btn btn-primary" onClick="location.href='checkout.php?id=<?php echo htmlspecialchars($garage['garage_id']) ?>'">
 
 
 									</div>

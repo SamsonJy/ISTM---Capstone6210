@@ -14,25 +14,24 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
-    <link rel ="stylesheet" href="style.css">
 
+    <link rel ="stylesheet" href="css/styles.css">
     <script src="js/javaScript.js"></script>
-    <link rel="stylesheet" href="css/styles.css">
+
 
     <title>Register Page</title>
+    <style>
+    body {
+      background-image: url('images/GWU Background.webp');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 120% 110%;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <div>
-            <div class="container-fluid">
-                <div>
-                    <h3 class="display-4">GWU Parking System</h3>
-                </div>
-            </div>
 
-        </div>
-    </header>
 
 
     <div class="p-5">
@@ -46,8 +45,8 @@
         <div class="input-group">
           <label>Email</label>
           <input type="email" name="email"
-          placeholder="Enter your E-mail address: **@**.**"
-          pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" value="<?php echo $email; ?>">
+          placeholder="Enter your E-mail address: **@**.***"
+          pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" value="<?php echo htmlspecialchars($email) ?>">
         </div>
         <div class="input-group">
           <label>Password</label>
@@ -61,7 +60,7 @@
           <button type="submit" class="btn" name="reg_user">Register</button>
         </div>
         <p>
-          Already a member? <a href="login.php">Sign in</a>
+          Already a member? <a href="login.php">Log in</a>
         </p>
       </form>
     </div>
@@ -74,8 +73,5 @@
     <br />
 
 
-    <div class="footer">
-        <p>6210 Group A</p>
-    </div>
 </body>
 </html>
