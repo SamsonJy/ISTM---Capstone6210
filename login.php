@@ -34,7 +34,7 @@
 <body>
 
 
-    <div class="p-5">
+    <div class="p-5 form">
       <div class="header">
         <h2>Log In</h2>
       </div>
