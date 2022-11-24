@@ -53,9 +53,11 @@ if (isset($_POST['reg_user'])) {
   	$query = "INSERT INTO users (email, password)
   			      VALUES( '$email', '$password')";
   	mysqli_query($conn, $query);
-  	//$_SESSION['username'] = $username;
-  	$_SESSION['success'] = "You are now logged in";
-  	header('location: confirm.php');
+
+    echo "<script>
+    alert('Regeister successfully!');
+    window.location.href='login.php';
+    </script>";
   }
 }
 if (isset($_POST['login_user'])) {
