@@ -20,3 +20,10 @@ function checkDate() {
   }
 	return true;
 };
+function show(n) {
+    document.getElementById("table1").style.display="none";
+    document.getElementById("table2").style.display="none";
+    document.getElementById("table3").style.display="none";
+    document.getElementById("table" + t).style.display="block";
+};
+
