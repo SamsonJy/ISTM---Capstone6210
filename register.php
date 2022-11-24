@@ -14,12 +14,20 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
-    <link rel ="stylesheet" href="style.css">
 
+    <link rel ="stylesheet" href="css/styles.css">
     <script src="js/javaScript.js"></script>
-    <link rel="stylesheet" href="css/styles.css">
+
 
     <title>Register Page</title>
+    <style>
+    body {
+      background-image: url('images/GWU Background.webp');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 120% 110%;
+    }
+  </style>
 </head>
 
 <body>
@@ -52,7 +60,7 @@
           <button type="submit" class="btn" name="reg_user">Register</button>
         </div>
         <p>
-          Already a member? <a href="login.php">Sign in</a>
+          Already a member? <a href="login.php">Log in</a>
         </p>
       </form>
     </div>
@@ -65,8 +73,5 @@
     <br />
 
 
-    <div class="footer">
-        <p>6210 Group A</p>
-    </div>
 </body>
 </html>

@@ -14,12 +14,21 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
-    <link rel ="stylesheet" href="style.css">
+
 
     <script src="js/javaScript.js"></script>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel ="stylesheet" href="css/styles.css">
+
 
     <title>Login Page</title>
+    <style>
+    body {
+      background-image: url('images/GWU Background.webp');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 120% 110%;
+    }
+  </style>
 </head>
 
 <body>
@@ -51,8 +60,5 @@
     <br />
 
 
-    <div class="footer">
-        <p>6210 Group A</p>
-    </div>
 </body>
 </html>
