@@ -10,14 +10,7 @@
     border-radius: 10px 10px 0px 0px;
     padding: 20px;
 }
-.form, .content {
-    width: 30%;
-    margin: 0px auto;
-    padding: 20px;
-    border: 1px solid #B0C4DE;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 0px 0px 10px 10px;
-}
+
 .input-group {
     margin: 10px 0px 10px 0px;
 }
@@ -34,7 +27,7 @@
     border-radius: 5px;
     border: 1px solid gray;
 }
-.inputgroup button {
+.inputgroup .btn {
     padding: 8px;
     width:100px;
     font-size: 15px;

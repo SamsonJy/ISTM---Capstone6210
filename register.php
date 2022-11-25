@@ -27,6 +27,23 @@
       background-attachment: fixed;
       background-size: 120% 110%;
     }
+    form, .content {
+        width: 30%;
+        margin: 0px auto;
+        padding: 20px;
+        border: 1px solid #B0C4DE;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 0px 0px 10px 10px;
+    }
+    .btn {
+        padding: 8px;
+        width:100px;
+        font-size: 15px;
+        color: white;
+        background: #3e627c;
+        border: none;
+        border-radius: 5px;
+    }
   </style>
 </head>
 
