@@ -1,8 +1,9 @@
 <?php
 include('db_connect.php' );
 session_start();
-//$userID = $_SESSION['userID'];
-$userID = 1;
+//$userID = 1;
+$userID = $_SESSION['userID'];
+
 //Get reservations, garages, payments and vehicle infos
 $sqlUpcoming = "SELECT * FROM reservations WHERE reservation_status = 'Upcoming' AND user_id = '$userID'";
 $upcomingResult = mysqli_query($conn, $sqlUpcoming);
@@ -55,34 +56,52 @@ mysqli_close($conn);
 
 		<script src="js/javaScript.js"></script>
 		<link rel="stylesheet" href="css/styles.css">
-    <link href="../css/multiColumnTemplate.css" rel="stylesheet" type="text/css">
+    <link href="css/multiColumnTemplate.css" rel="stylesheet" type="text/css">
 		<title>Reservation Records</title>
+
+		<style>
+		.btnList button{
+			padding: 8px;
+			width:200px;
+			border: 1px solid black;
+			background-color: white;
+			font-size: 15px;
+			border-radius: 5px;
+		}
+
+	</style>
 	</head>
 
 	<body>
 		<header>
 			<div>
 				<div class="container-fluid">
-					<div>
-						<h3 class="display-4">GW Parking System</h3>
+					<div style="float:right;margin:20px">
+						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
 					</div>
+					<h3><img src="images/gw_logo.png" alt="GW Logo" width="80" height="60" style="float:left">Parking System</h3>
 				</div>
-
-			</div>
 		</header>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item">
+		        <a class="nav-link" href="home.php">Home</a>
+		      </li>
+		      <li class="nav-item active">
+		        <a class="nav-link" href="reservations.php">Reservations <span class="sr-only">(current)</span></a>
+		      </li>
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-link" href="home.php">Home</a>
-          <a class="nav-link active" href="reservations.php" >Reservations</a>
-					<a class="nav-link" href="contact.html">Contact Us</a>
-				</div>
-			</div>
+		    </ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">My Account</a>
+					</li>
+				</ul>
+		  </div>
 		</nav>
 
 
@@ -92,12 +111,13 @@ mysqli_close($conn);
 
 					<h3 class="display-5">Reservation Records: </h3>
 
-          <div style="display:inline;">
-            <button type="button" onclick='show(1);'>Ongoing Reservations</button>
-            <button type="button" onclick='show(2);'>Upcoming Reservations</button>
-            <button type="button" onclick='show(3);'>Past Reservations</button>
+
+          <div class="btnList" style="display:inline;">
+            <button type="button" id="btn1" onclick='show(1);'>Ongoing Reservations</button>
+            <button type="button" id="btn2" onclick='show(2);'>Upcoming Reservations</button>
+            <button type="button" id="btn3" onclick='show(3);'>Past Reservations</button>
           </div>
-          </br>
+          <br /><br />
 
 
           <table class="table" id="table1">
@@ -118,7 +138,7 @@ mysqli_close($conn);
                 <td><?php echo $ongoingReservation['arrival_time']. ", " . $ongoingReservation['arrival_date']?></td>
                 <td><?php echo $ongoingReservation['exit_time']. ", " . $ongoingReservation['exit_date']?></td>
                 <td><?php echo $ongoingReservation['reservation_status']?></td>
-                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($ongoingReservation); 
+                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($ongoingReservation);
                 ?>>Details</button></td>
               </tr>
               <?php }?>
@@ -168,7 +188,7 @@ mysqli_close($conn);
                     <td><?php echo $pastReservation['arrival_time']. ", " . $pastReservation['arrival_date']?></td>
                     <td><?php echo $pastReservation['exit_time']. ", " . $pastReservation['exit_date']?></td>
                     <td><?php echo $pastReservation['reservation_status']?></td>
-                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($pastReservation); 
+                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($pastReservation);
                 ?>>Details</button></td>
                   </tr>
                   <?php }?>
@@ -178,14 +198,26 @@ mysqli_close($conn);
 
               </br>
 
+
               <script>
+
               function show(n) {
+									document.getElementById("btn1").style.backgroundColor="white";
+									document.getElementById("btn2").style.backgroundColor="white";
+									document.getElementById("btn3").style.backgroundColor="white";
+									document.getElementById("btn1").style.color="black";
+									document.getElementById("btn2").style.color="black";
+									document.getElementById("btn3").style.color="black";
+									document.getElementById("btn"+n).style.backgroundColor="#083c5c";
+									document.getElementById("btn"+n).style.color="white";
                   document.getElementById("table1").style.display="none";
                   document.getElementById("table2").style.display="none";
                   document.getElementById("table3").style.display="none";
                   document.getElementById("table"+n).style.display="block";
-      
+
               };
+
+
               </script>
 
     <!-- Modal -->
@@ -205,7 +237,7 @@ mysqli_close($conn);
                   <th scope="col">Start Time</th>
                   <th scope="col">End Time</th>
                   <th scope="col">Vehicle Model</th>
-                  <th scope="col">Vehicle Plate</th> 
+                  <th scope="col">Vehicle Plate</th>
                   <th scope="col">Vehicle Color</th>
                   <th scope="col">Payment Info</th>
                 </tr>
@@ -236,7 +268,7 @@ mysqli_close($conn);
       $json_garage = json_encode($garages);
       $json_payment = json_encode($payments);
       $json_vehicle = json_encode($vehicles);
-      echo "<script> 
+      echo "<script>
       var garagesD = $json_garage;
       var paymentM = $json_payment;
       var vehicles = $json_vehicle;
@@ -245,8 +277,8 @@ mysqli_close($conn);
           //functions for modal
         $('#detail-modal').on('show.bs.modal', function (event) {
           //change the modal table use the data passed from data-whatever
-          var button = $(event.relatedTarget) 
-          var record = button.data('whatever') 
+          var button = $(event.relatedTarget)
+          var record = button.data('whatever')
           var modal = $(this)
           var vehicle = vehicles[record['vehicle_id']-1];
           var payment = paymentM[record['payment_id']-1];
@@ -289,7 +321,7 @@ mysqli_close($conn);
               mysqli_close($conn);
             ?>
 
-             
+
             location.reload();
           } else {
 
@@ -303,9 +335,14 @@ mysqli_close($conn);
           }
         }
       </script>
+
+
+
+
+
     </div>
-    
-    
+
+
 		<div class="footer">
 			<p>6210 Group A</p>
 		</div>
