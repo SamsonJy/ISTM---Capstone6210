@@ -33,15 +33,72 @@ $result_vehicles = mysqli_query($conn, $sql_vehicles);
 
 //INSERT
 if(isset($_POST['submit'])){
-  if(isset($_POST['saveVehicleInfo'])){
-    $brand = mysqli_real_escape_string($conn, $_POST['vModel']);
-    $color = mysqli_real_escape_string($conn, $_POST['vColor']);
-    $plate_number = mysqli_real_escape_string($conn, $_POST['lPlate']);
-    $state = mysqli_real_escape_string($conn, $_POST['state']);
-    $sql_vehicle = "INSERT INTO vehicles(brand, color, plate_number, state, user_id) VALUES ('$brand', '$color', '$plate_number', '$state', '$userID')";
-    mysqli_query($conn, $sql_vehicle);
-  }
-  if(isset($_POST['savePaymentInfo'])){
+  // if(isset($_POST['saveVehicleInfo'])){
+  //   $brand = mysqli_real_escape_string($conn, $_POST['vModel']);
+  //   $color = mysqli_real_escape_string($conn, $_POST['vColor']);
+  //   $plate_number = mysqli_real_escape_string($conn, $_POST['lPlate']);
+  //   $state = mysqli_real_escape_string($conn, $_POST['state']);
+  //   $sql_vehicle = "INSERT INTO vehicles(brand, color, plate_number, state, user_id) VALUES ('$brand', '$color', '$plate_number', '$state', '$userID')";
+  //   mysqli_query($conn, $sql_vehicle);
+  // }
+  // if(isset($_POST['savePaymentInfo'])){
+  //   $cardholder_name = mysqli_real_escape_string($conn, $_POST['cardName']);
+  //   $card_number = mysqli_real_escape_string($conn, $_POST['cardNum']);
+  //   $cvv0 = mysqli_real_escape_string($conn, $_POST['cvv']);
+  //   $cvv = md5($cvv0);
+  //   $expiration_date = mysqli_real_escape_string($conn, $_POST['expireDate']);
+  //   $zip_code = mysqli_real_escape_string($conn, $_POST['zip']);
+  //   $sql_payment = "INSERT INTO payments(cardholder_name, card_number, cvv, expiration_date, zip_code, user_id) VALUES ('$cardholder_name', '$card_number', '$cvv', '$expiration_date', '$zip_code', '$userID')";
+  //   mysqli_query($conn, $sql_payment);
+  //
+  // }
+//TBF
+  // $sql_vehicleID = "SELECT vehicle_id FROM vehicles WHERE plate_number = '$plate_number' AND state = '$state'";
+  // $vehicleResult = mysqli_query($conn, $sql_vehicleID);
+  // $theVehicle = mysqli_fetch_assoc($vehicleResult);
+  // $_SESSION['vehicleID'] = $theVehicle['vehicle_id'];
+  //
+  //
+  // $sql_paymentID = "SELECT payment_id FROM payments WHERE card_number = '$card_number' AND cvv = '$cvv'";
+  // $paymentResult = mysqli_query($conn, $sql_paymentID);
+  // $thePayment = mysqli_fetch_assoc($paymentResult);
+  // $_SESSION['paymentID'] = $thePayment['payment_id'];
+// test condition 2
+  $garageID = $_SESSION['garageID'];
+  if (isset($_POST['cardChoice'])) {
+    if (isset($_POST['vehicleChoice'])) {
+      // first situation, select stored card and vehicle
+      $vehicleID = $_POST['vehicleChoice'];
+      $paymentID = $_POST['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+
+    } elseif (isset($_POST['saveVehicleInfo'])) {
+      // second situation, select stored card and save new vehicle
+      // save new vehicle
+      $brand = mysqli_real_escape_string($conn, $_POST['vModel']);
+      $color = mysqli_real_escape_string($conn, $_POST['vColor']);
+      $plate_number = mysqli_real_escape_string($conn, $_POST['lPlate']);
+      $state = mysqli_real_escape_string($conn, $_POST['state']);
+      $sql_vehicle = "INSERT INTO vehicles(brand, color, plate_number, state, user_id) VALUES ('$brand', '$color', '$plate_number', '$state', '$userID')";
+      mysqli_query($conn, $sql_vehicle);
+
+      // retrieve vehicle ID
+      $sql_vehicleID = "SELECT vehicle_id FROM vehicles WHERE plate_number = '$plate_number' AND state = '$state'";
+      $vehicleResult = mysqli_query($conn, $sql_vehicleID);
+      $theVehicle = mysqli_fetch_assoc($vehicleResult);
+      $_SESSION['vehicleID'] = $theVehicle['vehicle_id'];
+
+      $vehicleID = $_SESSION['vehicleID'];
+      $paymentID = $_POST['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    } else {
+      // third situation, selected stored card and no need to store vehicle
+      $paymentID = $_POST['cardChoice'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', NULL, '$paymentID')";
+    }
+
+  } elseif (isset($_POST['savePaymentInfo'])) {
+    // save new card
     $cardholder_name = mysqli_real_escape_string($conn, $_POST['cardName']);
     $card_number = mysqli_real_escape_string($conn, $_POST['cardNum']);
     $cvv0 = mysqli_real_escape_string($conn, $_POST['cvv']);
@@ -51,21 +108,74 @@ if(isset($_POST['submit'])){
     $sql_payment = "INSERT INTO payments(cardholder_name, card_number, cvv, expiration_date, zip_code, user_id) VALUES ('$cardholder_name', '$card_number', '$cvv', '$expiration_date', '$zip_code', '$userID')";
     mysqli_query($conn, $sql_payment);
 
-  }
-//TBF
-  $sql_vehicleID = "SELECT vehicle_id FROM vehicles WHERE plate_number = '$plate_number' AND state = '$state'";
-  $vehicleResult = mysqli_query($conn, $sql_vehicleID);
-  $theVehicle = mysqli_fetch_assoc($vehicleResult);
-  $_SESSION['vehicleID'] = $theVehicle['vehicle_id'];
-  $sql_paymentID = "SELECT payment_id FROM payments WHERE card_number = '$card_number' AND cvv = '$cvv'";
-  $paymentResult = mysqli_query($conn, $sql_paymentID);
-  $thePayment = mysqli_fetch_assoc($paymentResult);
-  $_SESSION['paymentID'] = $thePayment['payment_id'];
+    //retrieve card idea
+    $sql_paymentID = "SELECT payment_id FROM payments WHERE card_number = '$card_number' AND cvv = '$cvv'";
+    $paymentResult = mysqli_query($conn, $sql_paymentID);
+    $thePayment = mysqli_fetch_assoc($paymentResult);
+    $_SESSION['paymentID'] = $thePayment['payment_id'];
 
-  $garageID = $_SESSION['garageID'];
-  $vehicleID = $_SESSION['vehicleID'];
-  $paymentID = $_SESSION['paymentID'];
-  $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    if (isset($_POST['vehicleChoice'])) {
+      // fourth situation, save card info and select stored vehicle
+      $vehicleID = $_POST['vehicleChoice'];
+      $paymentID = $_SESSION['paymentID'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    } elseif (isset($_POST['saveVehicleInfo'])) {
+      //fifth situation, save card info and save vehicle info
+      // save new vehicle
+      $brand = mysqli_real_escape_string($conn, $_POST['vModel']);
+      $color = mysqli_real_escape_string($conn, $_POST['vColor']);
+      $plate_number = mysqli_real_escape_string($conn, $_POST['lPlate']);
+      $state = mysqli_real_escape_string($conn, $_POST['state']);
+      $sql_vehicle = "INSERT INTO vehicles(brand, color, plate_number, state, user_id) VALUES ('$brand', '$color', '$plate_number', '$state', '$userID')";
+      mysqli_query($conn, $sql_vehicle);
+
+      // retrieve vehicle ID
+      $sql_vehicleID = "SELECT vehicle_id FROM vehicles WHERE plate_number = '$plate_number' AND state = '$state'";
+      $vehicleResult = mysqli_query($conn, $sql_vehicleID);
+      $theVehicle = mysqli_fetch_assoc($vehicleResult);
+      $_SESSION['vehicleID'] = $theVehicle['vehicle_id'];
+
+      $vehicleID = $_SESSION['vehicleID'];
+      $paymentID = $_SESSION['paymentID'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', '$paymentID')";
+    } else {
+      // sixth situation, save card info and no need to save vehicle info
+      // $vehicleID = NULL;
+      $paymentID = $_SESSION['paymentID'];
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', NULL, '$paymentID')";
+    }
+  } else {
+    if (isset($_POST['vehicleChoice'])) {
+      // seventh situation, no need to save card info and select saved vehicle
+      $vehicleID = $_POST['vehicleChoice'];
+      // $paymentID = NULL;
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', NULL)";
+    } elseif (isset($_POST['saveVehicleInfo'])) {
+      // eighth situation, no need to save card and save new vehicle
+      // save new vehicle
+      $brand = mysqli_real_escape_string($conn, $_POST['vModel']);
+      $color = mysqli_real_escape_string($conn, $_POST['vColor']);
+      $plate_number = mysqli_real_escape_string($conn, $_POST['lPlate']);
+      $state = mysqli_real_escape_string($conn, $_POST['state']);
+      $sql_vehicle = "INSERT INTO vehicles(brand, color, plate_number, state, user_id) VALUES ('$brand', '$color', '$plate_number', '$state', '$userID')";
+      mysqli_query($conn, $sql_vehicle);
+
+      // retrieve vehicle ID
+      $sql_vehicleID = "SELECT vehicle_id FROM vehicles WHERE plate_number = '$plate_number' AND state = '$state'";
+      $vehicleResult = mysqli_query($conn, $sql_vehicleID);
+      $theVehicle = mysqli_fetch_assoc($vehicleResult);
+      $_SESSION['vehicleID'] = $theVehicle['vehicle_id'];
+
+      $vehicleID = $_SESSION['vehicleID'];
+      // $paymentID = NULL;
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', '$vehicleID', NULL)";
+    } else {
+      // no need to save vehicle and card
+      // $vehicleID = NULL;
+      // $paymentID = NULL;
+      $sql_reservation = "INSERT INTO reservations(arrival_date, arrival_time, exit_date, exit_time, total_charge, reservation_status, duration_in_hours, user_id, garage_id, vehicle_id, payment_id) VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$price', 'Upcoming', '$totalTimeHour', '$userID', '$garageID', NULL, NULL)";
+    }
+  }
   mysqli_query($conn, $sql_reservation);
   header('Location: confirmation.php');
 }
@@ -80,14 +190,13 @@ if(isset($_POST['submit'])){
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <!-- jQuery library -->
-		<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script>window.jQuery || document.write('<script src="path/to/jquery-3.5.0.js"><\/script>')</script>
 
 		<!-- Latest compiled JavaScript -->
-		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script> -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+
 
 		<script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
@@ -96,48 +205,55 @@ if(isset($_POST['submit'])){
 	</head>
 
 	<body>
-		<header>
+    <header>
 			<div>
 				<div class="container-fluid">
-					<div>
-						<h3 class="display-4">GWU Parking System</h3>
+					<div style="float:right;margin:20px">
+						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
 					</div>
+					<h3><img src="images/gw_logo.png" alt="GW Logo" width="80" height="60" style="float:left">Parking System</h3>
 				</div>
-
-			</div>
 		</header>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item">
+		        <a class="nav-link" href="home.php">Home</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="reservations.php">Reservations</a>
+		      </li>
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-link active" href="home.php">Home</a>
-					<a class="nav-link" href="contact.html">Contact Us</a>
-				</div>
-			</div>
+		    </ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">My Account</a>
+					</li>
+				</ul>
+		  </div>
 		</nav>
 
     <div class="modal-content">
 
       <div class=container>
-        <p>Garage: <?php echo htmlspecialchars($garage['garage_name']) ?> <a href="garageList.php">Edit</a></p>
+        <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">Edit</a></p>
       </div>
       <br />
-      <span class="close">&times;</span>
+
       <hr>
       <p>Vehicle infomation</p>
 
       <div class="container">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="paymentForm" class="needs-validation" method="POST" novalidate>
           <div class="form-group row">
-            <div class="col">
+            <div class="col vehicle" id="vehicleSelected">
               <?php
               while ($row = mysqli_fetch_assoc($result_vehicles)){
-                echo "<input type='radio' name='vehicleChoice' value=" . htmlspecialchars($row['vehicle_id']) . "> ";
-                echo htmlspecialchars($row['plate_number']) . "  " . htmlspecialchars($row['brand'])  ;
+                echo "<input type='radio' name='vehicleChoice' value=" . $row['vehicle_id'] . "> ";
+                echo $row['plate_number'] . "  " . $row['brand']  ;
                 echo "<br />";
               }
                ?>
@@ -146,7 +262,7 @@ if(isset($_POST['submit'])){
 
           <div class="addVehicle">
             <p>
-              <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
+              <button id="newVehicle" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
                 New vehicle
               </button>
             </p>
@@ -205,13 +321,13 @@ if(isset($_POST['submit'])){
           <p>Payment Method</p>
 
           <div class="form-group row">
-            <div class="col">
+            <div class="col payment" id="paymentSelected">
               <?php
               while ($row = mysqli_fetch_assoc($result_payments)){
-                echo "<input type='radio' name='cardChoice' value=" . htmlspecialchars($row['payment_id']) . ">    ";
+                echo "<input type='radio' name='cardChoice' value=" . $row['payment_id'] . ">    ";
                 echo "Ending in ";
                 $lastFourDigi = substr($row["card_number"], -4);
-                echo htmlspecialchars($lastFourDigi);
+                echo $lastFourDigi;
                 echo "<br />";
               }
                ?>
@@ -219,7 +335,7 @@ if(isset($_POST['submit'])){
           </div>
           <div class="addPayment">
             <p>
-              <button class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
+              <button id="newPayment" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
                 New payment
               </button>
             </p>
@@ -286,7 +402,7 @@ if(isset($_POST['submit'])){
           <br />
           <hr>
           <div class="container">
-            <div class="float-right">Total: $<?php echo htmlspecialchars($price) ?></div>
+            <div class="float-right">Total: $<?php echo $price; ?></div>
           </div>
           <br>
           <br>
@@ -298,10 +414,51 @@ if(isset($_POST['submit'])){
       </div>
 
     </div>
+    <br />
 
 
 		<div class="footer">
 			<p>6210 Group A</p>
 		</div>
 	</body>
+  <script type="text/javascript">
+    // vehicle disabled
+    var new_vehicle = document.getElementById("newVehicle");
+    new_vehicle.addEventListener("click", toggleDisabledVehicle);
+    function toggleDisabledVehicle(){
+      var showToggleV = document.querySelectorAll(".vehicle input[type='radio']");
+      var vehicle_showV = document.getElementById("vehicleOption");
+      for (var i = 0; i < showToggleV.length; i++) {
+        if (vehicle_showV.classList.contains("show")) {
+          showToggleV[i].disabled = false;
+        } else {
+          showToggleV[i].disabled = true;
+        }
+      }
+    }
+
+    // payment disabled
+    var new_payment = document.getElementById("newPayment");
+    new_payment.addEventListener("click", toggleDisabledPayment);
+    function toggleDisabledPayment(){
+      var showToggleP = document.querySelectorAll(".payment input[type='radio']");
+      var vehicle_showP = document.getElementById("paymentMethod");
+      for (var i = 0; i < showToggleP.length; i++) {
+        if (vehicle_showP.classList.contains("show")) {
+          showToggleP[i].disabled = false;
+        } else {
+          showToggleP[i].disabled = true;
+        }
+      }
+    }
+
+
+  // if (vehicle_show.classList.contains("show")) {
+  //   var showToggle = document.querySelectorAll(".vehicle input[type='radio']");
+  //   for (var i = 0; i < showToggle.length; i++) {
+  //     showToggle[i].disabled = true;
+  //   }
+  // }
+
+  </script>
 </html>
