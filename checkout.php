@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db_connect.php');
+include('utilities/db_connect.php');
 
 $totalTimeHour = $_SESSION['totalTimeHour'];
 $userID = $_SESSION['userID'];
@@ -221,7 +221,7 @@ if(isset($_POST['submit'])){
 		        <a class="nav-link" href="home.php">Home</span></a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="reservations.php">Reservations</a>
+		        <a class="nav-link" href="utilities/reservations.php">Reservations</a>
 		      </li>
 
 		    </ul>

@@ -1,5 +1,5 @@
 <?php
-include('db_connect.php' );
+include('utilities/db_connect.php' );
 session_start();
 //$userID = 1;
 $userID = $_SESSION['userID'];
@@ -331,7 +331,7 @@ mysqli_close($conn);
               //$_SESSION['reservation_change'] = record['reservation_id'];
               alert("Reservation cancal Sucessfully!");
             <?php
-              include('db_connect.php' );
+              include('utilities/db_connect.php' );
               $sqlCancel = "UPDATE reservations SET reservation_status = 'Cancelled' WHERE reservation_id = 'rid'";
               $upcomingResult = mysqli_query($conn, $sqlUpcoming);
               mysqli_close($conn);
