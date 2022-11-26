@@ -65,7 +65,7 @@
 .primary_header h1{
 	position: relative;
 	margin-left:auto;
-	
+
   	left: 70px;
 	background-color: #C7CEF5;
 }
@@ -140,9 +140,7 @@
 	background-color: #717070;
 	cursor: pointer;
 }
-.footer {
-	background-color: #717070;
-}
+
 .title {
 	font-weight: bold;
 	font-style: normal;
