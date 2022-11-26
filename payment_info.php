@@ -29,7 +29,7 @@ session_start();
     <hr>
     <?php foreach ($payments as $payment) { ?>
         <?php $card_number = $payment['card_number'];
-        $card_last_four = substr($card_number, -5);
+        $card_last_four = substr($card_number, -4);
         ?>
         <label style="font-weight: bold">
             VISA(Ending in <?php echo $card_last_four;  ?>)
