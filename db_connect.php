@@ -1,12 +1,8 @@
 <?php
-//Connect database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "gwvp";
-$conn = mysqli_connect($servername, $username, $password);
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+//connect to local db
+$conn = mysqli_connect('localhost', 'ethan', '123456', 'GWVP');
+
+if(!$conn){
+  echo "Conncetion error: " . mysqli_connect_error();
 }
-mysqli_select_db ( $conn , $dbname);
 ?>
