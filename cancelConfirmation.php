@@ -8,7 +8,7 @@ $updateResult = mysqli_query($conn, $sqlupdate);
 $updateReservations = mysqli_fetch_all($updateResult, MYSQLI_ASSOC);
 ?>
 <?php
-session_start();
+
 
 $price = $_SESSION['price'];
 $startDateString = $_SESSION['startDate'];
