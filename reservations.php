@@ -60,13 +60,30 @@ mysqli_close($conn);
 		<title>Reservation Records</title>
 
 		<style>
-		.btnList button{
+		#btn1{
 			padding: 8px;
 			width:200px;
-			border: 1px solid black;
+			border: 1px solid #083c5c;
+			background-color: #083c5c;
+			color:white;
+			font-size: 15px;
+			border-radius: 5px;
+		}
+		#btn2, #btn3{
+			padding: 8px;
+			width:200px;
+			border: 1px solid #083c5c;
+			color:#083c5c;
 			background-color: white;
 			font-size: 15px;
 			border-radius: 5px;
+		}
+		table button{
+			border-radius: 5px;
+			border: 1px solid #083c5c;
+			background-color: #083c5c;
+			color:white;
+
 		}
 
 	</style>
@@ -137,7 +154,7 @@ mysqli_close($conn);
                 <td><?php echo $ongoingReservation['arrival_time']. ", " . $ongoingReservation['arrival_date']?></td>
                 <td><?php echo $ongoingReservation['exit_time']. ", " . $ongoingReservation['exit_date']?></td>
                 <td><?php echo $ongoingReservation['reservation_status']?></td>
-                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($ongoingReservation);
+                <td><button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($ongoingReservation);
                 ?>>Details</button></td>
               </tr>
               <?php }?>
@@ -163,7 +180,7 @@ mysqli_close($conn);
                   <td><?php echo $upcomingReservation['arrival_time']. ", " . $upcomingReservation['arrival_date']?></td>
                   <td><?php echo $upcomingReservation['exit_time']. ", " . $upcomingReservation['exit_date']?></td>
                   <td><?php echo $upcomingReservation['reservation_status']?></td>
-                  <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($upcomingReservation);?>>Details</button></td>
+                  <td><button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($upcomingReservation);?>>Details</button></td>
                 </tr>
                 <?php }?>
               </tbody>
@@ -187,7 +204,7 @@ mysqli_close($conn);
                     <td><?php echo $pastReservation['arrival_time']. ", " . $pastReservation['arrival_date']?></td>
                     <td><?php echo $pastReservation['exit_time']. ", " . $pastReservation['exit_date']?></td>
                     <td><?php echo $pastReservation['reservation_status']?></td>
-                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($pastReservation);
+                    <td><button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($pastReservation);
                 ?>>Details</button></td>
                   </tr>
                   <?php }?>
@@ -204,16 +221,15 @@ mysqli_close($conn);
 									document.getElementById("btn1").style.backgroundColor="white";
 									document.getElementById("btn2").style.backgroundColor="white";
 									document.getElementById("btn3").style.backgroundColor="white";
-									document.getElementById("btn1").style.color="black";
-									document.getElementById("btn2").style.color="black";
-									document.getElementById("btn3").style.color="black";
+									document.getElementById("btn1").style.color="#083c5c";
+									document.getElementById("btn2").style.color="#083c5c";
+									document.getElementById("btn3").style.color="#083c5c";
 									document.getElementById("btn"+n).style.backgroundColor="#083c5c";
 									document.getElementById("btn"+n).style.color="white";
                   document.getElementById("table1").style.display="none";
                   document.getElementById("table2").style.display="none";
                   document.getElementById("table3").style.display="none";
                   document.getElementById("table"+n).style.display="table";
-									document.getElementById("table"+n).style.width('100%');
 
               };
 
