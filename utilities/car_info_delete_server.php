@@ -2,7 +2,7 @@
         include 'car_info_header.php'
     ?>
 <?php 
-include "db_connect.php";
+include "../db_connect.php";
 $id= $_REQUEST['id'];
 
 

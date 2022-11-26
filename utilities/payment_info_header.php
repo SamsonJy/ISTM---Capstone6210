@@ -28,7 +28,7 @@
             </div>
         </div>
     </nav>
-    <img src="images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" />
+    <img src="../images\BAS_Parking hero_1920x400.jpg" alt="GWU Garage" />
 
 
     <div class="pt-4">

@@ -8,7 +8,7 @@ $id=$_REQUEST['id'];
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap demo</title>
+  <title>Vehicle Information</title>
   <script>
         function altercheck() {
             var make = document.getElementById("car_model").value;
