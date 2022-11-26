@@ -40,7 +40,7 @@ $location = $_SESSION['garageLocation'];
     <div>
       <div class="container-fluid">
         <div style="float:right;margin:20px">
-          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
+          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="utilities/logout.php">Log out</a>
         </div>
         <h3 class="display-4">GW Parking System</h3>
       </div>
@@ -53,7 +53,7 @@ $location = $_SESSION['garageLocation'];
           <a class="nav-link" href="home.php">Home</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Reservations</a>
+          <a class="nav-link" href="reservations.php">Reservations</a>
         </li>
 
       </ul>

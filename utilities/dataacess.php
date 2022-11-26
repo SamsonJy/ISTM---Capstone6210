@@ -1,5 +1,5 @@
 <?php
-include('db_connect.php' );
+include('utilities/db_connect.php' );
 session_start();
 $garage = "SELECT * FROM garage Where garage.garage_id = '$garage_id'";
 $garageResult = mysqli_query($conn, $garage);
