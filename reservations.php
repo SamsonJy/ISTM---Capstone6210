@@ -119,7 +119,6 @@ mysqli_close($conn);
           </div>
           <br /><br />
 
-
           <table class="table" id="table1">
             <thead>
               <tr>
@@ -134,7 +133,7 @@ mysqli_close($conn);
             <tbody>
               <?php foreach($ongoingReservations as $ongoingReservation){?>
               <tr>
-                <th scope="row"><?php echo $ongoingReservation['reservation_id']?></th>
+                <td><?php echo $ongoingReservation['reservation_id']?></td>
                 <td><?php echo $ongoingReservation['arrival_time']. ", " . $ongoingReservation['arrival_date']?></td>
                 <td><?php echo $ongoingReservation['exit_time']. ", " . $ongoingReservation['exit_date']?></td>
                 <td><?php echo $ongoingReservation['reservation_status']?></td>
@@ -160,7 +159,7 @@ mysqli_close($conn);
               <tbody>
                 <?php foreach($upcomingReservations as $upcomingReservation){?>
                 <tr>
-                  <th scope="row"><?php echo $upcomingReservation['reservation_id']?></th>
+                  <td><?php echo $upcomingReservation['reservation_id']?></td>
                   <td><?php echo $upcomingReservation['arrival_time']. ", " . $upcomingReservation['arrival_date']?></td>
                   <td><?php echo $upcomingReservation['exit_time']. ", " . $upcomingReservation['exit_date']?></td>
                   <td><?php echo $upcomingReservation['reservation_status']?></td>
@@ -184,7 +183,7 @@ mysqli_close($conn);
                 <tbody>
                   <?php foreach($pastReservations as $pastReservation){?>
                   <tr>
-                    <th scope="row"><?php echo $pastReservation['reservation_id']?></th>
+                    <td><?php echo $pastReservation['reservation_id']?></td>
                     <td><?php echo $pastReservation['arrival_time']. ", " . $pastReservation['arrival_date']?></td>
                     <td><?php echo $pastReservation['exit_time']. ", " . $pastReservation['exit_date']?></td>
                     <td><?php echo $pastReservation['reservation_status']?></td>
@@ -213,7 +212,8 @@ mysqli_close($conn);
                   document.getElementById("table1").style.display="none";
                   document.getElementById("table2").style.display="none";
                   document.getElementById("table3").style.display="none";
-                  document.getElementById("table"+n).style.display="block";
+                  document.getElementById("table"+n).style.display="table";
+									document.getElementById("table"+n).style.width('100%');
 
               };
 
