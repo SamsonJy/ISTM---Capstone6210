@@ -65,14 +65,14 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 
 	<body>
 		<header>
-			<div>
-				<div class="container-fluid">
-					<div style="float:right;margin:20px">
-						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="utilities/logout.php">Log out</a>
-					</div>
-					<h3 class="display-4">GW Parking System</h3>
-				</div>
-		</header>
+	    <div>
+	      <div class="container-fluid">
+	        <div style="float:right;margin:20px">
+	          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
+	        </div>
+	        <h3 class="display-4">GW Parking System</h3>
+	      </div>
+	  </header>
 
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="collapse navbar-collapse" id="navbarNav">
@@ -81,7 +81,7 @@ $_SESSION['totalTimeHour'] = 	$totalTimeHour;
 		        <a class="nav-link" href="home.php">Home</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="#">Reservations</a>
+		        <a class="nav-link" href="reservations.php">Reservations</a>
 		      </li>
 
 		    </ul>

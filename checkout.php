@@ -221,7 +221,7 @@ if(isset($_POST['submit'])){
 		        <a class="nav-link" href="home.php">Home</span></a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="utilities/reservations.php">Reservations</a>
+		        <a class="nav-link" href="reservations.php">Reservations</a>
 		      </li>
 
 		    </ul>
