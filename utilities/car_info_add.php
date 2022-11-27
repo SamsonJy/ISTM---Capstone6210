@@ -10,7 +10,7 @@
             var make = document.getElementById("car_model").value;
             var plate = document.getElementById("car_plate").value;
             var state = document.getElementById("car_state").value;
-           
+
             if (make.length == 0) {
                 alert("Your car model is empty! Please check.")
                 return false;
@@ -33,8 +33,8 @@
 </head>
 
 <body>
-    <?php   
-        include 'car_info_header.php'
+    <?php
+        include 'utilities/car_info_header.php'
     ?>
     <h1>Please enter your new car information.</h1>
     <form action="car_info_add_server.php" method='POST'>

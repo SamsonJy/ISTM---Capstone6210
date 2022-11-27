@@ -8,7 +8,7 @@
   </head>
   <body>
   <?php
-    include "payment_info_header.php"
+    include "utilities/payment_info_header.php"
     ?>
     <h1>Your payment info has been successfully updated.</h1>
     <button type="button" class="btn btn-success" onclick="location.href='../payment_info.php'">Back to payment info page</button>

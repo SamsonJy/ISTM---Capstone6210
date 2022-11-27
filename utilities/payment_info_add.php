@@ -42,14 +42,14 @@
   </head>
   <body>
   <?php
-    include "payment_info_header.php"
+    include "utilities/payment_info_header.php"
     ?>
     <h1>Please add your payment information.</h1>
     <form action="payment_info_add_server.php"  method="POST">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Cardholder Name</label>
             <input type="text" class="form-control" name= "card_name" id="card_name" aria-describedby="emailHelp">
-            
+
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Card Number</label>

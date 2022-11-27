@@ -50,7 +50,7 @@ $id = $_REQUEST['id'];
 
 <body>
     <?php
-    include "payment_info_header.php"
+    include ("utilities/payment_info_header.php");
     ?>
     <h1>Please enter your new payment information</h1>
     <form action="payment_info_update_server.php?id=<?php echo $id; ?>" method="POST">

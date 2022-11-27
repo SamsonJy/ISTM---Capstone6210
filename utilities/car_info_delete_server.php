@@ -1,8 +1,8 @@
-<?php   
-        include 'car_info_header.php'
+<?php
+        include 'utilities/car_info_header.php'
     ?>
-<?php 
-include "../db_connect.php";
+<?php
+include "utilities/db_connect.php";
 $id= $_REQUEST['id'];
 
 
@@ -16,5 +16,5 @@ mysqli_query($conn,$sql);
 
 <?php
 
-include "info_updated_message.php";
+include "utilities/info_updated_message.php";
 ?>

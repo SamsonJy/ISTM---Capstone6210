@@ -1,5 +1,5 @@
-<?php 
-include "../db_connect.php";
+<?php
+include ("utilities/db_connect.php");
 $id= $_REQUEST['id'];
 $card_name=$_REQUEST['card_name'];
 $card_number= $_REQUEST['card_number'];
@@ -9,8 +9,8 @@ $card_zip=$_REQUEST['card_zip'];
 
 $card_cvv=md5($card_cvv);
 
-$sql=("UPDATE `payments` SET 
-`cardholder_name` = '$card_name', 
+$sql=("UPDATE `payments` SET
+`cardholder_name` = '$card_name',
 `card_number` = '$card_number',
 `cvv` = '$card_cvv',
 `expiration_date` = '$card_date',
@@ -22,6 +22,5 @@ mysqli_query($conn,$sql);
 ?>
 <?php
 
-include "card_updated_message.php"
+include ("utilities/card_updated_message.php");
 ?>
-

@@ -1,5 +1,5 @@
 <?php
-include "db_connect.php";
+include "utilities/db_connect.php";
 //Get car info
 $sql = "SELECT * FROM vehicles;  ";
 $result = mysqli_query($conn, $sql);
@@ -66,7 +66,7 @@ session_start();
       <button type="button" class="btn btn-danger" onclick="location.href='utilities/car_info_delete.php?id=<?php echo $car['vehicle_id'] ?>'">Delete</button>
       <hr>
     <?php } ?>
-   
+
     <button type="button" class="btn btn-light" onclick="location.href='utilities/car_info_add.php'">Add vehicle</button>
 
 
