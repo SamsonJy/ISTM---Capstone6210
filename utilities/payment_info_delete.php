@@ -15,7 +15,7 @@ $id = $_REQUEST['id'];
 
 <body>
   <?php
-  include "utilities/payment_info_header.php"
+  include('utilities/payment_info_header.php');
   ?>
   <h1>Do you want to delete the payment information?</h1>
   <button type="button" class="btn btn-primary" onclick="location.href='payment_info_delete_server.php?id=<?php echo $id; ?>'">Yes</button>
