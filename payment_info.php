@@ -1,5 +1,5 @@
 <?php
-include ('utilities/db_connect.php');
+include('utilities/db_connect.php');
 //Get car info
 $sql = "SELECT * FROM payments;  ";
 $result = mysqli_query($conn, $sql);
