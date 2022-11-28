@@ -1,8 +1,8 @@
 <?php
 include('utilities/db_connect.php' );
 session_start();
-//$userID = 1;
-$userID = $_SESSION['userID'];
+$userID = 1;
+//$userID = $_SESSION['userID'];
 
 //Get reservations, garages, payments and vehicle infos
 $sqlUpcoming = "SELECT * FROM reservations WHERE reservation_status = 'Upcoming' AND user_id = '$userID'";
