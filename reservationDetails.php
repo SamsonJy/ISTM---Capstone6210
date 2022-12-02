@@ -1,7 +1,15 @@
 <?php
 include('utilities/db_connect.php' );
-
 session_start();
+
+if(isset($_POST['cancel'])){
+  $id_to_delete = mysqli_real_escape_string($conn, $_POST['id_to_delete']);
+  $sql = "DELETE FROM reservations WHERE reservation_id = $id_to_delete";
+  mysqli_query($conn, $sql);
+  header('Location: reservations.php');
+
+
+}
 if(isset($_GET['id'])){
   $id = mysqli_real_escape_string($conn, $_GET['id']);
   $sql = "SELECT reservations.reservation_id, reservations.arrival_time , reservations.arrival_date, reservations.exit_time, reservations.exit_date,
@@ -24,12 +32,10 @@ if(isset($_GET['id'])){
   $_SESSION['garage'] = $reservation['garage_name'];
   $_SESSION['location'] = $reservation['garage_location'];
   $_SESSION['vehicle'] = $reservation['brand'] . ", " . $reservation['plate_number'] . "-" . $reservation['state'];
-  mysqli_free_result($result);
-  mysqli_close($conn);
+
 }
-
-
-
+mysqli_free_result($result);
+mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html>
@@ -94,7 +100,7 @@ if(isset($_GET['id'])){
             <hr />
             <a href="reservations.php">← Back to the Previous Page</a>
           </br></br>
-          <div class="jumbotron pt-3">
+          <div id="detailTable" class="jumbotron pt-3">
               <div class="row">
                   <div class="col">
                       <h5 class="display-5"><span>Reservation # </span><?php echo htmlspecialchars($_SESSION['reservationID']) ?></h5>
@@ -121,8 +127,6 @@ if(isset($_GET['id'])){
                       <div class="col-4 py-1"> <span class="d-block text-muted">Vehicle: </span> <span><?php echo htmlspecialchars($_SESSION['vehicle'])?></span> </div>
               </div>
 
-
-
                 <hr />
                 <div class="row">
                     <div class="col">
@@ -142,20 +146,28 @@ if(isset($_GET['id'])){
             <p>
               Having trouble? <a href="contact.html">Contact Us</a>
             </p>
+
+
+            <form actions="reservationDetails.php" method="POST">
             <?php
             if($_SESSION['status'] == "Ongoing") {?>
-              <a href="#" class="btn btn-primary">Extend</a>
+              <input type="submit" class="btn btn-primary" name="extend" value="Extend" >
             <?php } else if($_SESSION['status'] == "Upcoming"){ ?>
-              <a href="#" class="btn btn-primary">Modify</a>
-              <a href="#" class="btn">Cancel</a>
-            <?php }
-
-             ?>
+              <input type="submit" class="btn btn-primary" name="modify" value="Modify">
+              <input type="hidden" name="id_to_delete" value="<?php echo $reservation['reservation_id'] ?>">
+              <input type="submit" class="btn" name="cancel" value="Cancel">
+            <?php } ?>
+            </form>
 
           </div>
         </br></br>
         </div>
       </div>
+
+
+
+
+
       <br />
 
       <div class="footer">
