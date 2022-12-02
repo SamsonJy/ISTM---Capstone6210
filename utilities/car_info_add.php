@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 
 <head>
@@ -34,13 +35,33 @@
 
 <body>
     <?php   
-        include 'car_info_header.php'
+    session_start();
+        include 'car_info_header.php';
+    if(isset($_POST['SubmitButton'])) {
+        include "db_connect.php";
+        $car_model=$_REQUEST['car_model'];
+        $car_plate=$_REQUEST['car_plate'];
+        $car_state=$_REQUEST['car_state'];
+        
+        
+        $sql=("INSERT INTO `vehicles` (`vehicle_id`, `brand`, `plate_number`, `state`,`user_id`) 
+VALUES (NULL, '$car_model', '$car_plate', '$car_state', '$_SESSION[userID]');");
+        
+        mysqli_query($conn,$sql);
+        header('location:../car_info.php');
+        }
     ?>
     <h1>Please enter your new car information.</h1>
-    <form action="car_info_add_server.php" method='POST'>
+    <form action="#" method='POST'>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Make & Model</label>
             <input type="text" class="form-control" name="car_model" id="car_model" aria-describedby="emailHelp">
+
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Color</label>
+            <input type="text" class="form-control" name="car_color" id="car_color" aria-describedby="emailHelp">
 
         </div>
         <div class="mb-3">
@@ -51,9 +72,16 @@
             <label for="exampleInputPassword1" class="form-label">State</label>
             <input type="text" class="form-control" name="car_state" id="car_state">
         </div>
-        <button type="submit" class="btn btn-primary" onclick="return altercheck()">Submit</button>
+        <button type="submit" name='SubmitButton' class="btn btn-primary" onclick="return altercheck()">Submit</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 
 </html>
+
+
+
+
+
+

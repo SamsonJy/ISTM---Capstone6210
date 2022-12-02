@@ -15,10 +15,27 @@ $id=$_REQUEST['id'];
   <?php   
         include 'car_info_header.php'
     ?>
+    <form action="#" method="POST">
     <h1>Do you want to delete the car information?</h1>
-    <button type="button" class="btn btn-primary" onclick="location.href='car_info_delete_server.php?id=<?php echo $id; ?>'" >Yes</button>
-    <button type="button" class="btn btn-secondary" onclick="location.href='car_info.php'">No</button>
+    <button type="submit" name="SubmitButton" class="btn btn-primary">Yes</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='../car_info.php'">No</button>
+    </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
 </html>
+<?php
+if (isset($_POST['SubmitButton'])) {
+
+  
+  include "db_connect.php";
+$sql=("DELETE FROM `vehicles` WHERE `vehicles`.`vehicle_id` = '$id';");
+
+
+mysqli_query($conn,$sql);
+mysqli_close($conn);
+header('location: ../car_info.php');
+
+}
+
+?>
