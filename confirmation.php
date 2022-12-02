@@ -40,9 +40,9 @@ $location = $_SESSION['garageLocation'];
     <div>
       <div class="container-fluid">
         <div style="float:right;margin:20px">
-          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="utilities/logout.php">Log out</a>
+          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
         </div>
-        <h3 class="display-4">GW Parking System</h3>
+        <h3><img src="images/gw_logo.png" alt="GW Logo" width="80" height="60" style="float:left">Parking System</h3>
       </div>
   </header>
 
