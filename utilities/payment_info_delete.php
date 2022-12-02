@@ -1,8 +1,3 @@
-<?php
-session_start();
-$id = $_REQUEST['id'];
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -14,12 +9,31 @@ $id = $_REQUEST['id'];
 </head>
 
 <body>
-  <?php
-  include "payment_info_header.php"
-  ?>
+<?php
+    session_start();
+    $id = $_REQUEST['id'];
+        include "car_info_header.php";
+
+        if(isset($_POST['SubmitButton'])) {
+            include "db_connect.php";
+            $sql=("DELETE FROM `payments` WHERE `payments`.`payment_id` = '$id';");
+
+
+            mysqli_query($conn,$sql);
+            
+            
+            
+    
+             mysqli_close($conn);
+             header('location:../payment_info.php');
+
+        }
+    ?>
+  <form action="#" method="POST">
   <h1>Do you want to delete the payment information?</h1>
-  <button type="button" class="btn btn-primary" onclick="location.href='payment_info_delete_server.php?id=<?php echo $id; ?>'">Yes</button>
-  <button type="button" class="btn btn-secondary" onclick="location.href='payment_info.php'">No</button>
+  <button type="submit" name="SubmitButton" class="btn btn-primary">Yes</button>
+  <button type="button" class="btn btn-secondary" onclick="location.href='../payment_info.php'">No</button>
+  </form>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
