@@ -97,7 +97,7 @@ if(isset($_POST['search'])){
 					<a class="nav-link" href="payment_info.php">My Payment</a>
 					</li>
 					<li>
-					<a class="nav-link" href="password_update.php">My Password</a>
+					<a class="nav-link" href="password.php">My Password</a>
 					</li>
 					
 				</ul>
