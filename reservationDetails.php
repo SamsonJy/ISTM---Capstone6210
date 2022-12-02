@@ -2,7 +2,7 @@
 include('utilities/db_connect.php' );
 session_start();
 
-if(isset($_POST['cancel'])){
+if(isset($_POST['yes'])){
   $id_to_delete = mysqli_real_escape_string($conn, $_POST['id_to_delete']);
   $sql = "DELETE FROM reservations WHERE reservation_id = $id_to_delete";
   mysqli_query($conn, $sql);
@@ -57,6 +57,17 @@ mysqli_close($conn);
 		<link rel="stylesheet" href="css/styles.css">
 
 		<title>Reservation Details</title>
+    <style>
+    .btn {
+        padding: 8px;
+        width:100px;
+        font-size: 15px;
+        border: none;
+        border-radius: 5px;
+        margin-left:10px;
+        margin-right:10px;
+    }
+    </style>
 	</head>
 
   <body>
@@ -140,24 +151,62 @@ mysqli_close($conn);
                 </div>
               </div>
 
+              <div id="cancelForm" class="modal">
+                <div class="modal-content">
+                  <span id="close1" class="close">&times;</span>
+                </br></br>
+
+                  <form actions="reservationDetails.php" method="POST">
+                    <input type="hidden" name="id_to_delete" value="<?php echo $reservation['reservation_id'] ?>">
+                    <p>Cancel this reservation?</p>
+                    </br>
+                    <div class="text-center" >
+                    <input type="submit" class="btn btn-primary" name="yes" value="Yes">
+                    <input type="submit" class="btn btn-light" name="no" onclick="closeModel();" value="No">
+                  </div>
+                  </form>
+                </div>
+              </div>
+
+              <div id="modifyForm" class="modal">
+                <div class="modal-content">
+                  <span id="close2" class="close">&times;</span>
+                </br></br>
+
+                  <form actions="reservationDetails.php" method="POST">
+                    <input type="hidden" name="id_to_delete" value="<?php echo $reservation['reservation_id'] ?>">
+                    <p>Cancel this reservation?</p>
+                    </br>
+                    <div class="text-center" >
+                    <input type="submit" class="btn btn-primary" name="yes" value="Yes">
+
+                  </div>
+                  </form>
+                </div>
+              </div>
+
+
+
+
+
           <hr />
 
           <div class="text-center">
             <p>
               Having trouble? <a href="contact.html">Contact Us</a>
             </p>
-
-
-            <form actions="reservationDetails.php" method="POST">
             <?php
             if($_SESSION['status'] == "Ongoing") {?>
-              <input type="submit" class="btn btn-primary" name="extend" value="Extend" >
+              <button type="button" id="extendBTN">Extend</button>
             <?php } else if($_SESSION['status'] == "Upcoming"){ ?>
-              <input type="submit" class="btn btn-primary" name="modify" value="Modify">
-              <input type="hidden" name="id_to_delete" value="<?php echo $reservation['reservation_id'] ?>">
-              <input type="submit" class="btn" name="cancel" value="Cancel">
+              <div class="btnList" style="display:inline;">
+                <button type="button" id="modifyBTN" onclick=" OpenModel2();">Modify</button>
+                <button type="button" id="cancelBTN" onclick=" OpenModel1();">Cancel</button>
+              </div>
             <?php } ?>
-            </form>
+
+
+
 
           </div>
         </br></br>
@@ -169,6 +218,42 @@ mysqli_close($conn);
 
 
       <br />
+      <script>
+      /*document.getElementById("garageName").innerHTML = localStorage.getItem("garage");*/
+      var cancelModal = document.getElementById("cancelForm");
+      // Get the <span> element that closes the modal
+      var span = document.getElementById("close1");
+      // When the user clicks on the button, open the modal
+      function OpenModel1() {
+        cancelModal.style.display = "block";
+      }
+      function closeModel1(){
+        cancelModal.style.display = "none";
+      }
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        cancelModal.style.display = "none";
+      }
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == cancelModal) {
+          cancelModal.style.display = "none";
+        }
+      };
+
+      var modifyModal = document.getElementById("modifyForm");
+      var span2 = document.getElementById("close2");
+      function OpenModel2() {
+        modifyModal.style.display = "block";
+      }
+
+      span2.onclick = function () {
+        modifyModal.style.display = "none";
+      }
+
+
+
+      </script>
 
       <div class="footer">
           <p>6210 Group A</p>
