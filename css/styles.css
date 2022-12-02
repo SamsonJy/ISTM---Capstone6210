@@ -142,7 +142,6 @@ span {
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
@@ -155,9 +154,9 @@ span {
 .modal-content {
 	background-color: #fefefe;
 	margin: 2.5% auto; /* 15% from the top and centered */
-	padding: 20px;
+	padding: 10px;
 	border: 1px solid #888;
-	width: 40%; /* Could be more or less, depending on screen size */
+	width: 120%; /* Could be more or less, depending on screen size */
 }
 
 .modal-content p {
@@ -167,13 +166,16 @@ span {
 }
 
 .modal-content button {
-	margin-right: 70px;
-	margin-left: 70px;
-	width: 150px;
-	height: 40px;
+	margin-right: 20px;
+	margin-left: 20px;
+	width: auto;
+	height: auto;
 	border-radius: 4px;
+    
 }
-
+.modal-content button #cancel, #extend{
+    background: #3e627c;
+}
 .close {
 	position: absolute;
 	right: 0;
