@@ -73,6 +73,7 @@ if(isset($_POST['search'])){
 					<h3><img src="images/gw_logo.png" alt="GW Logo" width="80" height="60" style="float:left">Parking System</h3>
 				</div>
 		</header>
+		
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="collapse navbar-collapse" id="navbarNav">
 		    <ul class="navbar-nav">
@@ -89,8 +90,16 @@ if(isset($_POST['search'])){
 						<a class="nav-link" href="contact.html">Contact Us</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">My Account</a>
+						<a class="nav-link" href="car_info.php">My Vehicle</a>
+						
 					</li>
+					<li>
+					<a class="nav-link" href="payment_info.php">My Payment</a>
+					</li>
+					<li>
+					<a class="nav-link" href="password_update.php">My Password</a>
+					</li>
+					
 				</ul>
 		  </div>
 		</nav>

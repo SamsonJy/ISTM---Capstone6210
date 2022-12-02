@@ -1,13 +1,15 @@
 <?php
-include "db_connect.php";
+session_start();
+include "utilities/db_connect.php";
 //Get car info
-$sql = "SELECT * FROM vehicles;  ";
+// $sql = "SELECT * FROM vehicles WHERE 'user_id'= '$_SESSION[userID]';  ";
+$sql="SELECT * FROM `vehicles` WHERE `user_id`='$_SESSION[userID]';";
 $result = mysqli_query($conn, $sql);
 $cars = mysqli_fetch_all($result, MYSQLI_ASSOC);
 mysqli_free_result($result);
 mysqli_close($conn);
 
-session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -68,6 +70,7 @@ session_start();
     <?php } ?>
    
     <button type="button" class="btn btn-light" onclick="location.href='utilities/car_info_add.php'">Add vehicle</button>
+    <button type="button" class="btn btn-light" onclick="location.href='home.php'" >Back to Home page.</button>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
