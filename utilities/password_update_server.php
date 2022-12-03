@@ -1,7 +1,24 @@
 <?php
 session_start();
+include "db_connect.php";
+$curr_password = $_REQUEST['current_password'];
+$new_password = $_REQUEST['new_password'];
+$new_password_md5 = md5($new_password);
+$curr_password_md5 = md5($curr_password);
 $id = $_REQUEST['id'];
-?>
+
+$sql1 = "SELECT * FROM users WHERE email='$id' AND password= '$curr_password_md5'";
+$result = mysqli_query($conn, $sql1);
+$check = mysqli_fetch_array($result);
+// $new_password=$_REQUEST
+
+// if (isset($check)) {
+//     $sql = ("UPDATE `users` SET `password`='$new_password_md5' WHERE `users`.`email`='$id';");
+//     mysqli_query($conn, $sql);
+//     mysqli_close($conn);
+// }
+
+// ?>
 
 <head>
     <meta charset="utf-8">
@@ -21,14 +38,17 @@ $id = $_REQUEST['id'];
 
     <script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
-    <title>Your car information</title>
+
+    <title>Change Password</title>
+
+</head>
 
 <body>
     <header>
         <div>
             <div class="container-fluid">
                 <div style="float:right;margin:20px">
-                    <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="../logout.php">Log out</a>
+                    <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="utilities/logout.php">Log out</a>
                 </div>
                 <h3 class="display-4">GW Parking System</h3>
             </div>
@@ -47,50 +67,57 @@ $id = $_REQUEST['id'];
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="../contact.html">Contact Us</a>
+                    <a class="nav-link" href="..\contact.html">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../car_info.php">My Vehicle</a>
+                    <a class="nav-link" href="..\car_info.php">My Vehicle</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../payment_info.php">My Payment</a>
+                    <a class="nav-link" href="..\payment_info.php">My Payment</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../password.php">My Password</a>
+                    <a class="nav-link" href="..\password.php">My Password</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <body>
-        <?php
-        if (isset($_POST['SubmitButton'])) {
+    <div class="pt-4">
+        
 
-
-            include "db_connect.php";
-            $sql = ("DELETE FROM `vehicles` WHERE `vehicles`.`vehicle_id` = '$id';");
-
-
+        <?php if (isset($check)) {
+            $sql = ("UPDATE `users` SET `password`='$new_password_md5' WHERE `users`.`email`='$id';");
             mysqli_query($conn, $sql);
-            mysqli_close($conn);
-            header('location: ../car_info.php');
-        }
-
-        ?>
-
-        <div class="pt-4">
+            mysqli_close($conn); ?>
             <div class="container">
-                <form action="#" method="POST">
-                    <h1>Do you want to delete the car information?</h1>
-                    <button type="submit" name="SubmitButton" class="btn btn-primary">Yes</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='../car_info.php'">No</button>
-                </form>
+            <div id="garageName">
+                <h3 class="display-5">Your password has been changed </h3>
+                <p>You have successfully changed your password</p>
             </div>
-        </div>
+            <hr />
+            <a href="..\home.php">← Back to the Home Page</a>
+            <hr />
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    </body>
+        </div>
+            
+       <?php } 
+        else{ ?>
+            <div class="container">
+            <div id="garageName">
+                <h3 class="display-5">Incorrect current password</h3>
+                <p>The password you entered is incorrect. Please try again</p>
+            </div>
+            <hr />
+            <a href="..\password.php">← Back to the Previous Page</a>
+            <hr />
+       <?php }
+        ?>
+    </div>
+
+
     <div class="footer">
         <p>6210 Group A</p>
     </div>
-    </html>
+</body>
+
+</html>
