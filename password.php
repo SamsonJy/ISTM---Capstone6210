@@ -102,7 +102,7 @@ mysqli_close($conn);
 
     <div class="pt-4">
         <div class="container">
-            <div id="garageName">
+            <div id="password">
                 <h3 class="display-5">Change your password: </h3>
             </div>
             <hr />
