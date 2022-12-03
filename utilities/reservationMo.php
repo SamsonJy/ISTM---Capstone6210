@@ -29,8 +29,9 @@ if (isset($_POST['vehicleUpdate'])){
 }
 
 if(isset($_POST['yes'])){
-  $id_to_delete = mysqli_real_escape_string($conn, $_POST['id_to_delete']);
-  $sql = "DELETE FROM reservations WHERE reservation_id = $id_to_delete";
+  $id_to_cancel = mysqli_real_escape_string($conn, $_POST['id_to_cancel']);
+  //$sql = "DELETE FROM reservations WHERE reservation_id = $id_to_delete";
+  $sql = "UPDATE reservations SET reservation_status = 'Canceled' WHERE reservation_id = '$id_to_cancel'";
   mysqli_query($conn, $sql);
   header('Location: reservations.php');
 

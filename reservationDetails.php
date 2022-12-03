@@ -122,7 +122,7 @@ include('utilities/reservationMo.php' );
               <br><br>
 
               <form actions="reservationDetails.php" method="POST" >
-                <input type="hidden" name="id_to_delete" value="<?php echo $reservation['reservation_id'] ?>">
+                <input type="hidden" name="id_to_cancel" value="<?php echo $reservation['reservation_id'] ?>">
                 <p>Cancel this reservation?</p>
                 <br>
 
@@ -227,6 +227,8 @@ include('utilities/reservationMo.php' );
 
 
 
+
+
           <hr />
 
           <div class="text-center">
@@ -235,7 +237,7 @@ include('utilities/reservationMo.php' );
             </p>
             <?php
             if($_SESSION['status'] == "Ongoing") {?>
-              <button type="button" id="extendBTN">Extend</button>
+              <button type="button" onclick=" OpenModel3();">Extend</button>
             <?php } else if($_SESSION['status'] == "Upcoming"){ ?>
               <div class="btnList" style="display:inline;">
                 <button type="button"  onclick=" OpenModel2();">Modify</button>
@@ -267,8 +269,12 @@ include('utilities/reservationMo.php' );
 
       /*document.getElementById("garageName").innerHTML = localStorage.getItem("garage");*/
       var cancelModal = document.getElementById("cancelForm");
+			var modifyModal = document.getElementById("modifyForm");
+			var extendModal = document.getElementById("extendForm");
       // Get the <span> element that closes the modal
       var span = document.getElementById("close1");
+			var span2 = document.getElementById("close2");
+			var span3 = document.getElementById("close3");
       // When the user clicks on the button, open the modal
       function OpenModel1() {
         cancelModal.style.display = "block";
@@ -280,11 +286,8 @@ include('utilities/reservationMo.php' );
       span.onclick = function () {
         cancelModal.style.display = "none";
       }
-      // When the user clicks anywhere outside of the modal, close it
 
 
-      var modifyModal = document.getElementById("modifyForm");
-      var span2 = document.getElementById("close2");
       function OpenModel2() {
         modifyModal.style.display = "block";
       }
@@ -293,6 +296,15 @@ include('utilities/reservationMo.php' );
         modifyModal.style.display = "none";
       }
 
+			function OpenModel3() {
+				extendModal.style.display = "block";
+			}
+			span3.onclick = function () {
+				extendModal.style.display = "none";
+			}
+
+
+      // When the user clicks anywhere outside of the modal, close it
       window.onclick = function (event) {
         if (event.target == cancelModal) {
           cancelModal.style.display = "none";
@@ -300,6 +312,9 @@ include('utilities/reservationMo.php' );
         if (event.target == modifyModal) {
           modifyModal.style.display = "none";
         }
+				if (event.target == extendModal) {
+					extendModal.style.display = "none";
+				}
       };
 
 
