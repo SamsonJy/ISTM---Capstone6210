@@ -235,185 +235,187 @@ if(isset($_POST['submit'])){
 				</ul>
 		  </div>
 		</nav>
+    <div class="background-img" style="background-image: url('images/checkoutpage.jpg'); padding: 0; margin: 0;">
+      <div class="modal-content" style="border:0; width:60%; opacity: 0.9;">
 
-    <div class="modal-content">
+        <div class=container>
+          <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">Edit</a></p>
+        </div>
+        <br />
 
-      <div class=container>
-        <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">Edit</a></p>
-      </div>
-      <br />
+        <hr>
+        <p>Vehicle infomation</p>
 
-      <hr>
-      <p>Vehicle infomation</p>
-
-      <div class="container">
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="paymentForm" class="needs-validation" method="POST" novalidate>
-          <div class="form-group row">
-            <div class="col vehicle" id="vehicleSelected">
-              <?php
-              while ($row = mysqli_fetch_assoc($result_vehicles)){
-                echo "<input type='radio' name='vehicleChoice' value=" . $row['vehicle_id'] . "> ";
-                echo $row['plate_number'] . "  " . $row['brand']  ;
-                echo "<br />";
-              }
-               ?>
+        <div class="container">
+          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="paymentForm" class="needs-validation" method="POST" novalidate>
+            <div class="form-group row">
+              <div class="col vehicle" id="vehicleSelected">
+                <?php
+                while ($row = mysqli_fetch_assoc($result_vehicles)){
+                  echo "<input type='radio' name='vehicleChoice' value=" . $row['vehicle_id'] . "> ";
+                  echo $row['plate_number'] . "  " . $row['brand']  ;
+                  echo "<br />";
+                }
+                 ?>
+              </div>
             </div>
-          </div>
 
-          <div class="addVehicle">
-            <p>
-              <button id="newVehicle" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
-                New vehicle
-              </button>
-            </p>
-
-          </div>
-          <div class="collapse" id="vehicleOption">
-            <div class="card card-body">
-              <div class="form-group row">
-                <div class="col">
-                  <label for="vModel">Make & Model: </label>
-                  <input type="text"  name="vModel" class="form-control" placeholder="Example: Honda Civic" required>
-                  <div class="valid-feedback"></div>
-                  <div class="invalid-feedback">
-                    Please fill in your vehicle brand and model.
-                  </div>
-                </div>
-                <div class="col">
-                  <label for="vColor">Color: </label>
-                  <input type="text" name="vColor" class="form-control" required>
-                  <div class="valid-feedback"></div>
-                  <div class="invalid-feedback">
-                    Please fill in your vehicle color.
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col">
-                  <label for="lPlate">License Plate:</label>
-                  <input type="text" name="lPlate" class="form-control" required>
-                  <div class="valid-feedback"></div>
-                  <div class="invalid-feedback">
-                    Please fill in your license plate number.
-                  </div>
-                </div>
-                <div class="col">
-                  <label for="state">State:</label>
-                  <input type="text" name="state" class="form-control" required>
-                  <div class="valid-feedback"></div>
-                  <div class="invalid-feedback">
-                    Please fill in the state of your license.
-                  </div>
-                </div>
-              </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="saveVehicleInfo">
-                <label class="form-check-label" for="exampleCheck1">Save Vehicle Info</label>
-              </div>
+            <div class="addVehicle">
+              <p>
+                <button id="newVehicle" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
+                  New vehicle
+                </button>
+              </p>
 
             </div>
-          </div>
-
-
-          <br />
-
-          <hr />
-          <p>Payment Method</p>
-
-          <div class="form-group row">
-            <div class="col payment" id="paymentSelected">
-              <?php
-              while ($row = mysqli_fetch_assoc($result_payments)){
-                echo "<input type='radio' name='cardChoice' value=" . $row['payment_id'] . ">    ";
-                echo "Ending in ";
-                $lastFourDigi = substr($row["card_number"], -4);
-                echo $lastFourDigi;
-                echo "<br />";
-              }
-               ?>
-            </div>
-          </div>
-          <div class="addPayment">
-            <p>
-              <button id="newPayment" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
-                New payment
-              </button>
-            </p>
-            <div class="collapse" id="paymentMethod">
+            <div class="collapse" id="vehicleOption">
               <div class="card card-body">
                 <div class="form-group row">
                   <div class="col">
-                    <label for="cardName">Cardholder Name: </label>
-                    <input type="text"  name="cardName" class="form-control" required>
+                    <label for="vModel">Make & Model: </label>
+                    <input type="text"  name="vModel" class="form-control" placeholder="Example: Honda Civic" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
-                      Please fill in cardholder name.
+                      Please fill in your vehicle brand and model.
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="vColor">Color: </label>
+                    <input type="text" name="vColor" class="form-control" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                      Please fill in your vehicle color.
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col">
-                    <label for="cardNum">Card Number: </label>
-                    <input type="text" name="cardNum" class="form-control" required>
+                    <label for="lPlate">License Plate:</label>
+                    <input type="text" name="lPlate" class="form-control" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
-                      Please fill in the card number.
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col">
-                    <label for="expireDate">Expiration Date: </label>
-                    <input type="text" name="expireDate" class="form-control" placeholder="MM/YY" required>
-                    <div class="valid-feedback"></div>
-                    <div class="invalid-feedback">
-                      Please fill in the card expiration date.
+                      Please fill in your license plate number.
                     </div>
                   </div>
                   <div class="col">
-                    <label for="cvv">CVV/CVC:</label>
-                    <input type="text" id="cvv" name="cvv" class="form-control" placeholder="3 digits" required>
+                    <label for="state">State:</label>
+                    <input type="text" name="state" class="form-control" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">
-                      Please fill in the CVV.
+                      Please fill in the state of your license.
                     </div>
                   </div>
-                  <div class="col">
-                    <label for="zip">Zip Code:</label>
-                    <input type="text" id="zip" name="zip" class="form-control" placeholder="5 digits" required>
-                    <div class="valid-feedback"></div>
-                    <div class="invalid-feedback">
-                      Please fill in the zip code.
-                    </div>
-                  </div>
-
-
-
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" name="savePaymentInfo">
-                  <label class="form-check-label" for="exampleCheck1">Save Payment Info</label>
+                  <input type="checkbox" class="form-check-input" name="saveVehicleInfo">
+                  <label class="form-check-label" for="exampleCheck1">Save Vehicle Info</label>
                 </div>
 
               </div>
             </div>
-          </div>
 
-          <br />
-          <hr>
-          <div class="container">
-            <div class="float-right">Total: $<?php echo $price; ?></div>
-          </div>
-          <br>
-          <br>
 
-          <div class="homeButton">
-            <input type="submit" name="submit" value="Place Order" class="btn btn-primary">
-          </div>
-        </form>
+            <br />
+
+            <hr />
+            <p>Payment Method</p>
+
+            <div class="form-group row">
+              <div class="col payment" id="paymentSelected">
+                <?php
+                while ($row = mysqli_fetch_assoc($result_payments)){
+                  echo "<input type='radio' name='cardChoice' value=" . $row['payment_id'] . ">    ";
+                  echo "Ending in ";
+                  $lastFourDigi = substr($row["card_number"], -4);
+                  echo $lastFourDigi;
+                  echo "<br />";
+                }
+                 ?>
+              </div>
+            </div>
+            <div class="addPayment">
+              <p>
+                <button id="newPayment" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
+                  New payment
+                </button>
+              </p>
+              <div class="collapse" id="paymentMethod">
+                <div class="card card-body">
+                  <div class="form-group row">
+                    <div class="col">
+                      <label for="cardName">Cardholder Name: </label>
+                      <input type="text"  name="cardName" class="form-control" required>
+                      <div class="valid-feedback"></div>
+                      <div class="invalid-feedback">
+                        Please fill in cardholder name.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col">
+                      <label for="cardNum">Card Number: </label>
+                      <input type="text" name="cardNum" class="form-control" required>
+                      <div class="valid-feedback"></div>
+                      <div class="invalid-feedback">
+                        Please fill in the card number.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col">
+                      <label for="expireDate">Expiration Date: </label>
+                      <input type="text" name="expireDate" class="form-control" placeholder="MM/YY" required>
+                      <div class="valid-feedback"></div>
+                      <div class="invalid-feedback">
+                        Please fill in the card expiration date.
+                      </div>
+                    </div>
+                    <div class="col">
+                      <label for="cvv">CVV/CVC:</label>
+                      <input type="text" id="cvv" name="cvv" class="form-control" placeholder="3 digits" required>
+                      <div class="valid-feedback"></div>
+                      <div class="invalid-feedback">
+                        Please fill in the CVV.
+                      </div>
+                    </div>
+                    <div class="col">
+                      <label for="zip">Zip Code:</label>
+                      <input type="text" id="zip" name="zip" class="form-control" placeholder="5 digits" required>
+                      <div class="valid-feedback"></div>
+                      <div class="invalid-feedback">
+                        Please fill in the zip code.
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="savePaymentInfo">
+                    <label class="form-check-label" for="exampleCheck1">Save Payment Info</label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <br />
+            <hr>
+            <div class="container">
+              <div class="float-right"><strong>Total: $<?php echo $price; ?></strong></div>
+            </div>
+            <br>
+            <br>
+
+            <div class="homeButton">
+              <input type="submit" name="submit" value="Place Order" class="btn btn-primary">
+            </div>
+          </form>
+        </div>
+
       </div>
-
     </div>
+
     <br />
 
 
