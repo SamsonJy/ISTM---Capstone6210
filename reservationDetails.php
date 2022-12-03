@@ -1,6 +1,14 @@
 <?php
 include('utilities/db_connect.php' );
 include('utilities/reservationMo.php' );
+$exitTimeString = $_SESSION['exitTime'];
+$exitTime = explode(':', $exitTimeString);
+$minEndTimeHour = (int)$exitTime[0] + 1;
+$maxEndTimeHour = (int)$exitTime[0] + 3;
+$minEndTime0 = (string)$minEndTimeHour;
+$maxEndTime0 = (string)$maxEndTimeHour;
+$minEndTime = $minEndTime0 . ":00";
+$maxEndTime = $maxEndTime0 . ":00";
 
 ?>
 <!DOCTYPE html>
@@ -14,6 +22,8 @@ include('utilities/reservationMo.php' );
     <!-- jQuery library -->
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script>window.jQuery || document.write('<script src="path/to/jquery-3.5.0.js"><\/script>')</script>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 		<!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
@@ -25,7 +35,7 @@ include('utilities/reservationMo.php' );
 
 		<title>Reservation Details</title>
     <style>
-    .btn {
+    form .btn {
         padding: 8px;
         width:100px;
         font-size: 15px;
@@ -34,7 +44,42 @@ include('utilities/reservationMo.php' );
         margin-left:10px;
         margin-right:10px;
     }
+		#btn1, #btn2 {
+			padding: 8px;
+			width:150px;
+			border: 1px solid #083c5c;
+			background-color: #083c5c;
+			color:white;
+			font-size: 15px;
+			border-radius: 5px;
+		}
+
+		#btn3 {
+			padding: 8px;
+			width:150px;
+			border: 1px solid #083c5c;
+			color:#083c5c;
+			background-color: white;
+			font-size: 15px;
+			border-radius: 5px;
+		}
+
     </style>
+		<script>
+		$(document).ready(function(){
+				$('input.timepicker').timepicker({
+					timeFormat: 'H:mm ',
+					interval: 60,
+					dynamic: false,
+					dropdown: true,
+					minTime:'<?php echo $minEndTime ?>',
+					maxTime: '<?php echo $maxEndTime ?>',
+					zindex: 9999999,
+
+				});
+		});
+
+		</script>
 	</head>
 
   <body>
@@ -89,8 +134,8 @@ include('utilities/reservationMo.php' );
             </div>
 
             <div class="row py-1">
-              <div class="col-4 py-1"> <span class="d-block text-muted">From: </span> <span><?php echo htmlspecialchars($_SESSION['arrivalTime'])?></span> </div>
-              <div class="col-4 py-1"> <span class="d-block text-muted">To: </span> <span><?php echo htmlspecialchars($_SESSION['exitTime'])?></span> </div>
+              <div class="col-4 py-1"> <span class="d-block text-muted">From: </span> <span><?php echo htmlspecialchars($_SESSION['arrivalDTime'])?></span> </div>
+              <div class="col-4 py-1"> <span class="d-block text-muted">To: </span> <span><?php echo htmlspecialchars($_SESSION['exitDTime'])?></span> </div>
               <div class="col-4 py-1"> <span class="d-block text-muted">Duration: </span> <span><?php echo htmlspecialchars($_SESSION['duration'])?> hrs</span> </div>
             </div>
 
@@ -100,6 +145,7 @@ include('utilities/reservationMo.php' );
             </div>
 
             <div class="row py-1">
+							<div class="col-4 py-1"> <span class="d-block text-muted">Total Charges: </span> <span>$<?php echo htmlspecialchars($_SESSION['totalCharge'])?>.00</span> </div>
               <div class="col-4 py-1"> <span class="d-block text-muted">Vehicle: </span> <span><?php echo htmlspecialchars($_SESSION['vehicle'])?></span> </div>
             </div>
             <hr />
@@ -224,7 +270,39 @@ include('utilities/reservationMo.php' );
            </div>
          </div>
 
+				 <div id="extendForm" class="modal">
+					 <div class="modal-content" >
 
+						 <p>Extend your reservation</p>
+						 <span id="close3" class="close">&times;</span>
+						 <br>
+						 <form actions="reservationDetails.php" method="POST" class="needs-validation" novalidate>
+							 <input type="hidden" name="id_to_extend" value="<?php echo $reservation['reservation_id'] ?>">
+							 <div class="form-group">
+								 <label for="exitDate">New Exit Time</label>
+								 <input type="text" class="form-control" name="exitDate" value="<?php echo htmlspecialchars($_SESSION['exitDate'])?>" disabled>
+							 </div>
+
+
+						 <div class="row">
+							 <div class="form-group col">
+								 <input type="text" class="form-control timepicker" name="newEndTime" placeholder="--:--" required>
+								 <div class="valid-feedback"></div>
+								 <div class="invalid-feedback">
+									 Please select a new departure time.
+								 </div>
+							 </div>
+						 </div>
+						 <br>
+						 <br>
+
+
+						 <div class="homeButton">
+							 <input type="submit" name="extendTime" value="Extend" class="btn btn-primary">
+						 </div>
+						 </form>
+					 </div>
+				 </div>
 
 
 
@@ -237,11 +315,11 @@ include('utilities/reservationMo.php' );
             </p>
             <?php
             if($_SESSION['status'] == "Ongoing") {?>
-              <button type="button" onclick=" OpenModel3();">Extend</button>
+              <button type="button" id="btn1" onclick=" OpenModel3();">Extend</button>
             <?php } else if($_SESSION['status'] == "Upcoming"){ ?>
               <div class="btnList" style="display:inline;">
-                <button type="button"  onclick=" OpenModel2();">Modify</button>
-                <button type="button"  onclick=" OpenModel1();">Cancel</button>
+                <button type="button" id="btn2" onclick=" OpenModel2();">Modify</button>
+                <button type="button" id="btn3"onclick=" OpenModel1();">Cancel</button>
               </div>
             <?php } ?>
 
