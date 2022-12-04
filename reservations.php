@@ -78,7 +78,7 @@ mysqli_close($conn);
 			font-size: 15px;
 			border-radius: 5px;
 		}
-		table button{
+		table input{
 			border-radius: 5px;
 			border: 1px solid #083c5c;
 			background-color: #083c5c;
@@ -154,8 +154,7 @@ mysqli_close($conn);
                 <td><?php echo $ongoingReservation['arrival_time']. ", " . $ongoingReservation['arrival_date']?></td>
                 <td><?php echo $ongoingReservation['exit_time']. ", " . $ongoingReservation['exit_date']?></td>
                 <td><?php echo $ongoingReservation['reservation_status']?></td>
-                <td><button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($ongoingReservation);
-                ?>>Details</button></td>
+                  <td><input type="button" name="detailBtn" value="Details" onClick="location.href='reservationDetails.php?id=<?php echo $ongoingReservation['reservation_id'] ?>'"></td>
               </tr>
               <?php }?>
             </tbody>
@@ -180,7 +179,7 @@ mysqli_close($conn);
                   <td><?php echo $upcomingReservation['arrival_time']. ", " . $upcomingReservation['arrival_date']?></td>
                   <td><?php echo $upcomingReservation['exit_time']. ", " . $upcomingReservation['exit_date']?></td>
                   <td><?php echo $upcomingReservation['reservation_status']?></td>
-                  <td><button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($upcomingReservation);?>>Details</button></td>
+                  <td><input type="button" name="detailBtn" value="Details" onClick="location.href='reservationDetails.php?id=<?php echo $upcomingReservation['reservation_id'] ?>'"></td>
                 </tr>
                 <?php }?>
               </tbody>
@@ -204,8 +203,7 @@ mysqli_close($conn);
                     <td><?php echo $pastReservation['arrival_time']. ", " . $pastReservation['arrival_date']?></td>
                     <td><?php echo $pastReservation['exit_time']. ", " . $pastReservation['exit_date']?></td>
                     <td><?php echo $pastReservation['reservation_status']?></td>
-                    <td><button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" data-whatever=<?php echo json_encode($pastReservation);
-                ?>>Details</button></td>
+                      <td><input type="button" name="detailBtn" value="Details" onClick="location.href='reservationDetails.php?id=<?php echo $pastReservation['reservation_id'] ?>'"></td>
                   </tr>
                   <?php }?>
                 </tbody>
@@ -235,94 +233,6 @@ mysqli_close($conn);
 
 
               </script>
-
-    <!-- Modal -->
-    <div class="modal fade" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="DetailModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="DetailModalLabel">Reservation Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-          </div>
-          <div class="modal-body">
-            <table class="reservation_details">
-              <thead>
-                <tr>
-                  <th scope="col">Garage Name</th>
-                  <th scope="col">Garage Location</th>
-                  <th scope="col">Start Time</th>
-                  <th scope="col">End Time</th>
-                  <th scope="col">Vehicle Model</th>
-                  <th scope="col">Vehicle Plate</th>
-                  <th scope="col">Vehicle Color</th>
-                  <th scope="col">Payment Info</th>
-                </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td id="garageN"></td>
-                <td id="garageD"></td>
-                <td id="timeS"></td>
-                <td id="timeE"></td>
-                <td id="vehicleM"></td>
-                <td id="vehicleP"></td>
-                <td id="vehicleC"></td>
-                <td id="paymentNum"></td>
-              </tr>
-            </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="cancel" onclick="cancelFunction()" style="display:none;">Cancel Reservation</button>
-            <button type="button" class="btn btn-primary" id="extend" onclick="extendFunction()">Extend Reservation</button>
-          </div>
-        </div>
-      </div>
-
-      <?php
-      $json_garage = json_encode($garages);
-      $json_payment = json_encode($payments);
-      $json_vehicle = json_encode($vehicles);
-      echo "<script>
-      var garagesD = $json_garage;
-      var paymentM = $json_payment;
-      var vehicles = $json_vehicle;
-      </script>"?>
-      <script>
-          //functions for modal
-        $('#detail-modal').on('show.bs.modal', function (event) {
-          //change the modal table use the data passed from data-whatever
-          var button = $(event.relatedTarget)
-          var record = button.data('whatever')
-          var modal = $(this)
-          var vehicle = vehicles[record['vehicle_id']-1];
-          var payment = paymentM[record['payment_id']-1];
-          var garage1 = garagesD[record['garage_id']];
-          console.log(record['reservation_status']);
-
-          var rid = record['reservation_id'];
-          if(record['reservation_status']=="Upcoming"){
-            document.getElementById("cancel").style.display ="Block";
-            document.getElementById("extend").style.display ="none";
-          } else if(record['reservation_status']=="Finished"||record['reservation_status']=="Cancelled"){
-            document.getElementById("extend").style.display ="none";
-            document.getElementById("cancel").style.display ="none";
-          } else if(record['reservation_status']=="Ongoing"){
-            document.getElementById("extend").style.display ="Block";
-            document.getElementById("cancel").style.display ="none";
-          }
-          modal.find('.modal-title').text('Reservation Details: ' + record['reservation_id'])
-          modal.find('.modal-body #garageN').text(garage1['garage_name'])
-          modal.find('.modal-body #garageD').text(garage1['garage_location'])
-          modal.find('.modal-body #timeS').text(record['arrival_time']+", "+record['arrival_date'])
-          modal.find('.modal-body #timeE').text(record['exit_time']+", "+record['exit_date'])
-          modal.find('.modal-body #vehicleM').text(vehicle['brand'])
-          modal.find('.modal-body #vehicleP').text(vehicle['plate_number']+", "+ vehicle['state'])
-          modal.find('.modal-body #vehicleC').text(vehicle['color'])
-          modal.find('.modal-body #paymentNum').text(payment['card_number'])
-        })
-      </script>
 
       <script>
         //function for cancal redirect

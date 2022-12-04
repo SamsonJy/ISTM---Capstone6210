@@ -154,9 +154,11 @@ span {
 .modal-content {
 	background-color: #fefefe;
 	margin: 2.5% auto; /* 15% from the top and centered */
-	padding: 10px;
+	padding: 20px;
+  top: 120px;
 	border: 1px solid #888;
-	width: 120%; /* Could be more or less, depending on screen size */
+	width: 35%; /* Could be more or less, depending on screen size */
+
 }
 
 .modal-content p {
