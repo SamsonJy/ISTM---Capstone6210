@@ -117,7 +117,7 @@ $location = $_SESSION['garageLocation'];
                 <p>
                     Having trouble? <a href="contact.html">Contact us</a>
                 </p>
-                <a href="home.php" class="btn btn-primary">Continue to Homepage</a>
+                <a href="home.php" style="background-color: #083c5c;" class="btn btn-primary">Continue to Homepage</a>
             </div>
 
 

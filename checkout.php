@@ -201,20 +201,32 @@ if(isset($_POST['submit'])){
 		<script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 
-		<title>Parking Details</title>
+		<title>Checkout</title>
+
+    <style>
+    body {
+      background-image: url('images/checkoutpage.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+
+      background-size: 100% 100%;
+      top:100px;
+    }
+    </style>
 	</head>
 
 	<body>
-    <header>
-			<div>
+    <header style="background-color:white;padding-bottom:0.5rem;">
 				<div class="container-fluid">
-					<div style="float:right;margin:20px">
+					<div style="float:right;margin:20px;">
 						<a style="margin-left:7px;font-weight:bold;color:#2a1484" href="logout.php">Log out</a>
 					</div>
-					<h3><img src="images/gw_logo.png" alt="GW Logo" width="80" height="60" style="float:left">Parking System</h3>
+
+					<h3 style="margin-bottom:0px;"><img src="images/gw_logo.png" alt="GW Logo" width="80" height="60" style="float:left;">Parking System</h3>
+
 				</div>
 		</header>
-		<nav class="navbar navbar-expand-lg navbar-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark" >
 			<div class="collapse navbar-collapse" id="navbarNav">
 		    <ul class="navbar-nav">
 		      <li class="nav-item">
@@ -235,15 +247,15 @@ if(isset($_POST['submit'])){
 				</ul>
 		  </div>
 		</nav>
-    <div class="background-img" style="background-image: url('images/checkoutpage.jpg'); padding: 0; margin: 0;">
-      <div class="modal-content" style="border:0; width:60%; opacity: 0.9;">
+      <div class="modal-content" style="border:0; top:0; width:50%; opacity: 0.9;">
 
         <div class=container>
-          <p>Garage: <?php echo $garage['garage_name'] ?> <a href="garageList.php">Edit</a></p>
-        </div>
-        <br />
+          <h3 class="display-5">Checkout</h3>
+          <a href="garageList.php">← Back to the Previous Page</a>
+          <hr />
 
-        <hr>
+        </div>
+
         <p>Vehicle infomation</p>
 
         <div class="container">
@@ -262,7 +274,7 @@ if(isset($_POST['submit'])){
 
             <div class="addVehicle">
               <p>
-                <button id="newVehicle" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
+                <button id="newVehicle" class="btn btn-primary hide-in" style="background-color: #083c5c;" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
                   New vehicle
                 </button>
               </p>
@@ -335,7 +347,7 @@ if(isset($_POST['submit'])){
             </div>
             <div class="addPayment">
               <p>
-                <button id="newPayment" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
+                <button id="newPayment" class="btn btn-primary hide-in" style="background-color: #083c5c;" type="button" data-toggle="collapse" data-target="#paymentMethod" aria-expanded="false" aria-controls="payment_collapse" >
                   New payment
                 </button>
               </p>
@@ -402,13 +414,13 @@ if(isset($_POST['submit'])){
             <br />
             <hr>
             <div class="container">
-              <div class="float-right"><strong>Total: $<?php echo $price; ?></strong></div>
+              <div class="float-right"><strong>Total: $<?php echo $price; ?>.00</strong></div>
             </div>
             <br>
             <br>
 
             <div class="homeButton">
-              <input type="submit" name="submit" value="Place Order" class="btn btn-primary">
+              <input type="submit" style="background-color: #083c5c;" name="submit" value="Place Order" class="btn btn-primary">
             </div>
           </form>
         </div>

@@ -173,8 +173,8 @@ $maxEndTime = $maxEndTime0 . ":00";
                 <br>
 
                 <div class="text-center" >
-                  <input type="submit" class="btn btn-primary" name="yes" value="Yes">
-                 <input type="submit" class="btn btn-light" name="no" onclick="closeModel();" value="No">
+                  <input type="submit" style="background-color: #083c5c;" class="btn btn-primary" name="yes" value="Yes">
+                 <input type="submit"  style="background-color: white; color:black;	border: 1px solid #083c5c;"class="btn btn-light" name="no" onclick="closeModel();" value="No">
                </div>
              </form>
            </div>
@@ -213,7 +213,7 @@ $maxEndTime = $maxEndTime0 . ":00";
 
                <div class="addVehicle">
                  <p>
-                   <button id="newVehicle" class="btn btn-primary hide-in" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
+                   <button id="newVehicle" class="btn btn-primary hide-in" style="background-color: #083c5c;" type="button" data-toggle="collapse" data-target="#vehicleOption" aria-expanded="false" aria-controls="vehicle_collapse">
                      New vehicle
                    </button>
                  </p>
@@ -261,10 +261,11 @@ $maxEndTime = $maxEndTime0 . ":00";
 
                  </div>
                </div>
-             </br></hr>
+
+						 <hr>
 
                <div class="homeButton">
-                 <input type="submit" name="vehicleUpdate" value="Update" class="btn btn-primary">
+                 <input type="submit" name="vehicleUpdate" style="background-color: #083c5c;" value="Update" class="btn btn-primary">
                </div>
              </form>
            </div>
@@ -298,7 +299,7 @@ $maxEndTime = $maxEndTime0 . ":00";
 
 
 						 <div class="homeButton">
-							 <input type="submit" name="extendTime" value="Extend" class="btn btn-primary">
+							 <input type="submit" name="extendTime" style="background-color: #083c5c;" value="Extend" class="btn btn-primary">
 						 </div>
 						 </form>
 					 </div>
