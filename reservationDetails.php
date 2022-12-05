@@ -17,7 +17,7 @@ $maxEndTime = $maxEndTime0 . ":00";
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <!-- jQuery library -->
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -93,27 +93,36 @@ $maxEndTime = $maxEndTime0 . ":00";
 				</div>
 		</header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="home.php">Home</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reservations.php">Reservations</a>
-          </li>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+		    <ul class="navbar-nav">
+		      <li class="nav-item">
+		        <a class="nav-link" href="home.php">Home</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="reservations.php">Reservations</a>
+		      </li>
 
-        </ul>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">My Account</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+		    </ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact Us</a>
+					</li>
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							My Account
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="password.php">Update Password</a>
+							<a class="dropdown-item" href="payment_info.php">My Payments</a>
+							<a class="dropdown-item" href="car_info.php">My Vehicles</a>
+						</div>
+					</li>
+
+				</ul>
+		  </div>
+		</nav>
 
       <div class="pt-4">
           <div class="container">

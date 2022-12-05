@@ -2,7 +2,6 @@
 session_start();
 $userID = $_SESSION['userID'];
 
-
 if (isset($_POST['extendTime'])){
     $reservation_id = mysqli_real_escape_string($conn, $_POST['id_to_extend']);
     $newExitTimeString = mysqli_real_escape_string($conn, $_POST['newEndTime']);
