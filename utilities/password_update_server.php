@@ -83,7 +83,7 @@ $check = mysqli_fetch_array($result);
     </nav>
 
     <div class="pt-4">
-        
+
 
         <?php if (isset($check)) {
             $sql = ("UPDATE `users` SET `password`='$new_password_md5' WHERE `users`.`email`='$id';");
@@ -99,8 +99,8 @@ $check = mysqli_fetch_array($result);
             <hr />
 
         </div>
-            
-       <?php } 
+
+       <?php }
         else{ ?>
             <div class="container">
             <div id="garageName">

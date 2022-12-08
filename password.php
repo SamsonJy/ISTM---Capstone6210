@@ -1,14 +1,17 @@
 <?php
 session_start();
 include "utilities/db_connect.php";
+
 //Get car info
 // $sql = "SELECT * FROM vehicles WHERE 'user_id'= '$_SESSION[userID]';  ";
-$sql = "SELECT * FROM `users` WHERE `user_id`='$_SESSION[userID]';";
+$sql = "SELECT * FROM `users` WHERE `user_id`='$_SESSION[userID]'";
 $result = mysqli_query($conn, $sql);
-$email = mysqli_fetch_all($result, MYSQLI_ASSOC);
-mysqli_free_result($result);
-mysqli_close($conn);
+$email = mysqli_fetch_assoc($result);
+$_SESSION['email'] = $email['email'];
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -33,6 +36,28 @@ mysqli_close($conn);
 		<script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
     <title>Change Password</title>
+    <style>
+    .btn1{
+      padding: 8px;
+      width:150px;
+      border: 1px solid #083c5c;
+      background-color: #083c5c;
+      color:white;
+      font-size: 15px;
+      border-radius: 5px;
+    }
+
+    .btn2 {
+      padding: 8px;
+      width:150px;
+      border: 1px solid #083c5c;
+      color:#083c5c;
+      background-color: white;
+      font-size: 15px;
+      border-radius: 5px;
+    }
+    </style>
+
     <script>
     function altercheck() {
       var current_pass = document.getElementById("current_password").value;
@@ -110,13 +135,13 @@ mysqli_close($conn);
             </div>
             <hr />
             <a href="home.php">← Back to the Previous Page</a>
+            <br /><br />
 
-            <?php foreach ($email as $emails) { ?>
-                <form action="utilities/password_update_server.php?id=<?php echo $emails['email'] ?>" method="POST">
+                <form action="utilities/password_update_server.php" method="POST">
                     <div class="mb-3">
                         <label>You are logged in as:</label>
                         <br>
-                        <label for="exampleInputEmail1" class="form-label"><?php echo $emails['email']; ?></label>
+                        <label for="exampleInputEmail1" class="form-label"><?php echo $email['email']; ?></label>
                         <br>
                     </div>
                     <div class="mb-3">
@@ -132,10 +157,10 @@ mysqli_close($conn);
                         <label for="exampleInputPassword1" class="form-label">Confirm New Password</label>
                         <input type="password" class="form-control" name="new_password_check" id="new_password_check">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="return altercheck()">Submit</button>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <br /><br />
+                    <button type="submit" class="btn1" onclick="return altercheck()">Submit</button>
+                    <button type="reset" class="btn2">Reset</button>
                 </form>
-            <?php } ?>
         </div>
 
     </div>
