@@ -5,9 +5,9 @@ $curr_password = $_REQUEST['current_password'];
 $new_password = $_REQUEST['new_password'];
 $new_password_md5 = md5($new_password);
 $curr_password_md5 = md5($curr_password);
-$id = $_REQUEST['id'];
+$email = $_SESSION['email'];
 
-$sql1 = "SELECT * FROM users WHERE email='$id' AND password= '$curr_password_md5'";
+$sql1 = "SELECT * FROM users WHERE email='$email' AND password= '$curr_password_md5'";
 $result = mysqli_query($conn, $sql1);
 $check = mysqli_fetch_array($result);
 // $new_password=$_REQUEST
@@ -44,75 +44,56 @@ $check = mysqli_fetch_array($result);
 </head>
 
 <body>
-    <header>
-        <div>
-            <div class="container-fluid">
-                <div style="float:right;margin:20px">
-                    <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="utilities/logout.php">Log out</a>
-                </div>
-                <h3 class="display-4">GW Parking System</h3>
-            </div>
-    </header>
-
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="../home.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Reservations</a>
-                </li>
-
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="..\contact.html">Contact Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="..\car_info.php">My Vehicle</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="..\payment_info.php">My Payment</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="..\password.php">My Password</a>
-                </li>
-            </ul>
+  <header>
+    <div>
+      <div class="container-fluid">
+        <div style="float:right;margin:20px">
+          <a style="margin-left:7px;font-weight:bold;color:#2a1484" href="../logout.php">Log out</a>
         </div>
-    </nav>
+        <h3><img src="../images/gw_logo.png" alt="GW Logo" width="80" height="60" style="float:left">Parking System</h3>
+      </div>
+  </header>
 
-    <div class="pt-4">
-        
+  <nav class="navbar navbar-expand-lg navbar-dark" style="height:50px;">
+
+
+  </nav>
+
+    <div style="margin-top:200px;">
+
 
         <?php if (isset($check)) {
-            $sql = ("UPDATE `users` SET `password`='$new_password_md5' WHERE `users`.`email`='$id';");
+            $sql = "UPDATE users SET password ='$new_password_md5' WHERE email ='$email'";
             mysqli_query($conn, $sql);
             mysqli_close($conn); ?>
-            <div class="container">
-            <div id="garageName">
-                <h3 class="display-5">Your password has been changed </h3>
-                <p>You have successfully changed your password</p>
-            </div>
-            <hr />
-            <a href="..\home.php">← Back to the Home Page</a>
-            <hr />
 
-        </div>
-            
-       <?php } 
-        else{ ?>
             <div class="container">
-            <div id="garageName">
-                <h3 class="display-5">Incorrect current password</h3>
-                <p>The password you entered is incorrect. Please try again</p>
+              <div class="jumbotron">
+                <br/><br/>
+                <h3 class="display-5 text-center">Your password has been updated successfully! </h3>
+                <br/>
+                <div class="homeButton">
+                  <button type="button" onclick="location.href='../logout.php'" name="vehicleUpdate" style="background-color: #083c5c;"class="btn btn-primary">Back to Login page </button>
+                </div>
+                <br/><br/>
+              </div>
             </div>
-            <hr />
-            <a href="..\password.php">← Back to the Previous Page</a>
-            <hr />
+
        <?php }
-        ?>
-    </div>
+        else{ ?>
+          <div class="container">
+            <div class="jumbotron">
+              <br/><br/>
+              <h3 class="display-5 text-center">Current password incorrect! </h3>
+              <br/>
+              <div class="homeButton">
+                <button type="button" onclick="location.href='../password.php'" name="vehicleUpdate" style="background-color: #083c5c;"class="btn btn-primary">Back to previous page </button>
+              </div>
+              <br/><br/>
+            </div>
+          </div>
+       <?php }?>
+     </div>
 
 
     <div class="footer">
