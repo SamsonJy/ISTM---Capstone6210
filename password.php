@@ -131,7 +131,7 @@ $_SESSION['email'] = $email['email'];
     <div class="pt-4">
         <div class="container">
             <div id="password">
-                <h3 class="display-5">Change your password: </h3>
+                <h3 class="display-5">Update your password</h3>
             </div>
             <hr />
             <a href="home.php">← Back to the Previous Page</a>
@@ -157,9 +157,11 @@ $_SESSION['email'] = $email['email'];
                         <label for="exampleInputPassword1" class="form-label">Confirm New Password</label>
                         <input type="password" class="form-control" name="new_password_check" id="new_password_check">
                     </div>
-                    <br /><br />
+                    <br />
+                    <div class="text-center">
                     <button type="submit" class="btn1" onclick="return altercheck()">Submit</button>
                     <button type="reset" class="btn2">Reset</button>
+                  </div>
                 </form>
         </div>
 

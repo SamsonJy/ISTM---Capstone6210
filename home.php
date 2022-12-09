@@ -43,7 +43,7 @@ if(isset($_POST['search'])){
 		<script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 
-
+    <title>Home</title>
 		<script>
 		$(document).ready(function(){
 				$('input.timepicker').timepicker({
