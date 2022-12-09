@@ -1,7 +1,6 @@
 <?php
 session_start();
-include "db_connect.php";
-
+include('utilities/db_connect.php');
 $id = $_REQUEST['id'];
 $sql="SELECT `cardholder_name` FROM `payments` WHERE `payment_id`= '$id' ";
 $sql2="SELECT `card_number` FROM `payments` WHERE `payment_id`= '$id' ";
@@ -15,6 +14,29 @@ $card_name = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $card_number = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 $card_expiration = mysqli_fetch_array($result3, MYSQLI_ASSOC);
 $card_zip = mysqli_fetch_array($result4, MYSQLI_ASSOC);
+
+if (isset($_POST['SubmitButton'])) {
+
+    $card_name = $_REQUEST['card_name'];
+    $card_number = $_REQUEST['card_number'];
+    $card_date = $_REQUEST['card_date'];
+    $card_cvv = $_REQUEST['card_cvv'];
+    $card_zip = $_REQUEST['card_zip'];
+
+    $card_cvv = md5($card_cvv);
+
+    $sql = ("UPDATE `payments` SET
+        `cardholder_name` = '$card_name',
+        `card_number` = '$card_number',
+        `cvv` = '$card_cvv',
+        `expiration_date` = '$card_date',
+        `zip_code` = '$card_zip'
+        WHERE `payments`.`payment_id` = '$id';");
+
+    mysqli_query($conn, $sql);
+    mysqli_close($conn);
+    header('location:payment_info.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +61,51 @@ $card_zip = mysqli_fetch_array($result4, MYSQLI_ASSOC);
 
 		<script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
-    <title>Your payment information</title>
+    <title>Payment Update</title>
+    <style>
+    .btn1{
+      padding: 8px;
+      width:150px;
+      border: 1px solid #083c5c;
+      background-color: #083c5c;
+      color:white;
+      font-size: 15px;
+      border-radius: 5px;
+    }
+    </style>
+    <script>
+        function altercheck() {
+            var name = document.getElementById("card_name").value;
+            var number = document.getElementById("card_number").value;
+            var date = document.getElementById("card_date").value;
+            var cvv = document.getElementById("card_cvv").value;
+            var zip = document.getElementById("card_zip").value;
+            if (name.length == 0) {
+                alert("Your cardholder name is empty! Please check.")
+                return false;
+            }
+
+            if (number.length == 0) {
+                alert("Your card number is empty! Please check.")
+                return false;
+            }
+
+
+            if (date.length == 0) {
+                alert("Your card date is empty! Please check.")
+                return false;
+            }
+            if (cvv.length == 0) {
+                alert("Your card cvv is empty! Please check.")
+                return false;
+            }
+            if (zip.length == 0) {
+                alert("Your card zip code is empty! Please check.")
+                return false;
+            }
+
+        }
+    </script>
     <body>
       <header>
         <div>
@@ -81,76 +147,12 @@ $card_zip = mysqli_fetch_array($result4, MYSQLI_ASSOC);
           </ul>
         </div>
       </nav>
-    <script>
-        function altercheck() {
-            var name = document.getElementById("card_name").value;
-            var number = document.getElementById("card_number").value;
-            var date = document.getElementById("card_date").value;
-            var cvv = document.getElementById("card_cvv").value;
-            var zip = document.getElementById("card_zip").value;
-            if (name.length == 0) {
-                alert("Your cardholder name is empty! Please check.")
-                return false;
-            }
-
-            if (number.length == 0) {
-                alert("Your card number is empty! Please check.")
-                return false;
-            }
-
-
-            if (date.length == 0) {
-                alert("Your card date is empty! Please check.")
-                return false;
-            }
-            if (cvv.length == 0) {
-                alert("Your card cvv is empty! Please check.")
-                return false;
-            }
-            if (zip.length == 0) {
-                alert("Your card zip code is empty! Please check.")
-                return false;
-            }
-
-        }
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-</head>
-
-<body>
-    <?php
-
-
-
-    if (isset($_POST['SubmitButton'])) {
-
-        $card_name = $_REQUEST['card_name'];
-        $card_number = $_REQUEST['card_number'];
-        $card_date = $_REQUEST['card_date'];
-        $card_cvv = $_REQUEST['card_cvv'];
-        $card_zip = $_REQUEST['card_zip'];
-
-        $card_cvv = md5($card_cvv);
-
-        $sql = ("UPDATE `payments` SET
-            `cardholder_name` = '$card_name',
-            `card_number` = '$card_number',
-            `cvv` = '$card_cvv',
-            `expiration_date` = '$card_date',
-            `zip_code` = '$card_zip'
-            WHERE `payments`.`payment_id` = '$id';");
-
-        mysqli_query($conn, $sql);
-        mysqli_close($conn);
-        header('location:../payment_info.php');
-    }
-    ?>
     <div class="pt-4">
     <div class="container">
-    <h3 class="display-5">Please enter your new payment information. </h3>
+    <h3 class="display-5">Update Payment</h3>
     <hr/>
-                    <a href="../payment_info.php">← Back to the Previous Page</a>
-                    <hr/>
+                    <a href="payment_info.php">← Back to the Previous Page</a>
+                    <br/><br/>
     <form action="#" method="POST">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Cardholder Name</label>
@@ -173,13 +175,14 @@ $card_zip = mysqli_fetch_array($result4, MYSQLI_ASSOC);
             <label for="exampleInputPassword1" class="form-label">Zip Code</label>
             <input type="text" class="form-control" name="card_zip" value="<?php echo implode(" ",$card_zip)?>" id="card_zip">
         </div>
-        <button type="submit" name="SubmitButton" class="btn btn-primary" onclick="return altercheck()">Submit</button>
+        <div class="text-center">
+        <button type="submit" name='SubmitButton' class="btn1" onclick="return altercheck()">Submit</button>
+      </div>
 
     </form>
     </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</body>
+
 <div class="footer">
         <p>6210 Group A</p>
     </div>

@@ -1,6 +1,21 @@
 <?php
 session_start();
 $id = $_REQUEST['id'];
+
+
+if (isset($_POST['SubmitButton'])) {
+
+
+    include "utilities/db_connect.php";
+    $sql = ("DELETE FROM `vehicles` WHERE `vehicles`.`vehicle_id` = '$id';");
+
+
+    mysqli_query($conn, $sql);
+    mysqli_close($conn);
+    header('location:car_info.php');
+}
+
+
 ?>
 
 <head>
@@ -22,8 +37,29 @@ $id = $_REQUEST['id'];
 
 		<script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
-    <title>Your car information</title>
+    <title>Delete Vehicle</title>
+    <style>
+    .btn1{
+      padding: 8px;
+      width:150px;
+      border: 1px solid #083c5c;
+      background-color: #083c5c;
+      color:white;
+      font-size: 15px;
+      border-radius: 5px;
+    }
 
+    .btn2 {
+      padding: 8px;
+      width:150px;
+      border: 1px solid #083c5c;
+      color:#083c5c;
+      background-color: white;
+      font-size: 15px;
+      border-radius: 5px;
+    }
+    </style>
+</head>
 <body>
   <header>
     <div>
@@ -65,35 +101,29 @@ $id = $_REQUEST['id'];
       </ul>
     </div>
   </nav>
-    <body>
-        <?php
-        if (isset($_POST['SubmitButton'])) {
 
-
-            include "db_connect.php";
-            $sql = ("DELETE FROM `vehicles` WHERE `vehicles`.`vehicle_id` = '$id';");
-
-
-            mysqli_query($conn, $sql);
-            mysqli_close($conn);
-            header('location: ../car_info.php');
-        }
-
-        ?>
-
-        <div class="pt-4">
-            <div class="container">
-                <form action="#" method="POST">
-                    <h1>Do you want to delete the car information?</h1>
-                    <button type="submit" name="SubmitButton" class="btn btn-primary">Yes</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='../car_info.php'">No</button>
-                </form>
-            </div>
+  <div style="margin-top:200px;">
+    <div class="container">
+      <div class="jumbotron">
+        <form action="#" method="POST">
+        <br/><br/>
+        <h3 class="display-5 text-center">Delete this vehicle record? </h3>
+        <br/>
+        <div class="text-center">
+          <button type="submit" name="SubmitButton" class="btn1">Yes</button>
+          <button type="button" class="btn2 " onclick="location.href='car_info.php'">No</button>
         </div>
+        <br/><br/>
+        </form>
+      </div>
+    </div>
+  </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    </body>
+
+
+
     <div class="footer">
         <p>6210 Group A</p>
     </div>
-    </html>
+  </body>
+</html>

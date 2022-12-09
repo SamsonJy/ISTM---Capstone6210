@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "db_connect.php";
+include('utilities/db_connect.php');
 $id = $_REQUEST['id'];
 $sql="SELECT `brand` FROM `vehicles` WHERE `vehicle_id`= '$id' ";
 $sql2="SELECT `plate_number` FROM `vehicles` WHERE `vehicle_id`= '$id' ";
@@ -11,7 +11,30 @@ $result3 = mysqli_query($conn, $sql3);
 $car_info = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $car_plate = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 $car_state = mysqli_fetch_array($result3, MYSQLI_ASSOC);
+
+
+if (isset($_POST['submitcar'])) {
+
+  // include "db_connect.php";
+
+  $car_model = $_REQUEST['car_model'];
+  $car_plate = $_REQUEST['car_plate'];
+  $car_state = $_REQUEST['car_state'];
+
+
+  $sql = ("UPDATE `vehicles` SET
+`brand` = '$car_model',
+`plate_number` = '$car_plate',
+`state` = '$car_state'
+ WHERE `vehicles`.`vehicle_id` = '$id';");
+
+  mysqli_query($conn, $sql);
+  mysqli_close($conn);
+  header('location:car_info.php');
+}
+
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -35,7 +58,43 @@ $car_state = mysqli_fetch_array($result3, MYSQLI_ASSOC);
 		<script src="js/javaScript.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 
-    <title>Your car information</title>
+    <title>Update Vehicle</title>
+    <style>
+    .btn1{
+      padding: 8px;
+      width:150px;
+      border: 1px solid #083c5c;
+      background-color: #083c5c;
+      color:white;
+      font-size: 15px;
+      border-radius: 5px;
+    }
+    </style>
+    <script>
+      function altercheck() {
+        var make = document.getElementById("car_model").value;
+        var plate = document.getElementById("car_plate").value;
+        var state = document.getElementById("car_state").value;
+
+        if (make.length == 0) {
+          alert("Your car model is empty! Please check.")
+          return false;
+        }
+
+        if (plate.length == 0) {
+          alert("Your car plate number is empty! Please check.")
+          return false;
+        }
+
+
+        if (state.length == 0) {
+          alert("Your car plate state is empty! Please check.")
+          return false;
+        }
+
+      }
+    </script>
+  </head>
     <body>
       <header>
         <div>
@@ -77,64 +136,13 @@ $car_state = mysqli_fetch_array($result3, MYSQLI_ASSOC);
           </ul>
         </div>
       </nav>
-  <script>
-    function altercheck() {
-      var make = document.getElementById("car_model").value;
-      var plate = document.getElementById("car_plate").value;
-      var state = document.getElementById("car_state").value;
-
-      if (make.length == 0) {
-        alert("Your car model is empty! Please check.")
-        return false;
-      }
-
-      if (plate.length == 0) {
-        alert("Your car plate number is empty! Please check.")
-        return false;
-      }
-
-
-      if (state.length == 0) {
-        alert("Your car plate state is empty! Please check.")
-        return false;
-      }
-
-    }
-  </script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-</head>
-<?php
-if (isset($_POST['submitcar'])) {
-
-  // include "db_connect.php";
-
-  $car_model = $_REQUEST['car_model'];
-  $car_plate = $_REQUEST['car_plate'];
-  $car_state = $_REQUEST['car_state'];
-
-
-  $sql = ("UPDATE `vehicles` SET
-`brand` = '$car_model',
-`plate_number` = '$car_plate',
-`state` = '$car_state'
- WHERE `vehicles`.`vehicle_id` = '$id';");
-
-  mysqli_query($conn, $sql);
-  mysqli_close($conn);
-  header('location: ../car_info.php');
-}
-
-?>
-
-<body>
-
 
   <div class="pt-4">
     <div class="container">
-    <h3 class="display-5">Please enter your new car information. </h3>
+    <h3 class="display-5">Update Vehicle</h3>
   <hr>
-  <a href="../car_info.php">← Back to the Previous Page</a>
-  <hr>
+  <a href="car_info.php">← Back to the Previous Page</a>
+  <br/><br/>
   <form action="#" method="POST">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Make & Model</label>
@@ -148,13 +156,14 @@ if (isset($_POST['submitcar'])) {
       <label for="exampleInputPassword1" class="form-label">State</label>
       <input type="text" class="form-control" name="car_state" id="car_state" value="<?php echo implode(" ",$car_state) ?>">
     </div>
-    <button type="submit" name="submitcar" class="btn btn-primary" onclick="return  altercheck()">Submit</button>
+    <div class="text-center">
+    <button type="submit" name='submitcar' class="btn1" onclick="return altercheck()">Submit</button>
+  </div>
 
   </form>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</body>
+
 <div class="footer">
         <p>6210 Group A</p>
     </div>
